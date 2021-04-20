@@ -1,13 +1,20 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { v4: uuid } = require('uuid');
 
+app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 //const postRouter = require('./routes/posts');
 
+// DB Setting Start---------------------------------------------------------
 const mongoose = require('mongoose');
+
 // This is the default address for MongoDB.
 // Make sure MongoDB is running!
 const mongoEndpoint = 'mongodb://127.0.0.1/project_3_hacker_news';
+
 // useNewUrlParser is not required, but the old parser is deprecated
 mongoose.connect(mongoEndpoint, { useNewUrlParser: true });
 
@@ -16,35 +23,29 @@ const db = mongoose.connection;
 
 // This will create the connection, and throw an error if it doesn't work
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
+// DB Setting End-----------------------------------------------------------
 
+const UserModel = require('./model/user.model')
 
-const TestUserModel = require('./model/testUser.model')
-
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get('/testApiGet', function(req, res){
-    const testUsers = TestUserModel.findAllUsers()
+app.get('/findAllUsers', function(req, res){
+    const testUsers = UserModel.findAllUsers()
         .then((findAllUserResponse) => {
-            res.status(200).send(findAllUserResponse);
+            res.status(200).send({res_msg:"Success", res_body: findAllUserResponse});
         }, (error) => {
             res.status(500).send(error);
         })
 })
 
-//Test API. Take it as a reference.
-app.post('/testApiPost', function(req, res){
+app.post('/addUser', function(req, res){
     console.log(req.body);
     let newUser = {
-        userId: req.body.requestData.userId,
-        account: req.body.requestData.account,
-        password: req.body.requestData.password
+        userId: uuid(),
+        account: req.body.user.account,
+        password: req.body.user.password
     }
-    TestUserModel.addUser(newUser)
-        .then((newUserResponse)=>{
-            res.status(200).send({responseDate:"This is response data"});
+    UserModel.addUser(newUser)
+        .then((addUserResponse)=>{
+            res.status(200).send({res_msg:"Success", res_body:""});
         }, (error) => {
             res.status(500).send(error);
         });

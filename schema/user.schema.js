@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-TestUserSchema = new mongoose.Schema({
+UserSchema = new mongoose.Schema({
     userId:{
         type: String,
     },
@@ -10,9 +10,9 @@ TestUserSchema = new mongoose.Schema({
     password:{
         type: String
     }
-}, {collection: 'testUser'})
+}, {collection: 'user'})
 
-exports.TestUserSchema = TestUserSchema;
+exports.UserSchema = UserSchema;
 
 // Here are some common decalaration methods
 // 
