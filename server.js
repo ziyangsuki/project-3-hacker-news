@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 const path = require('path');
-const { v4: uuid } = require('uuid');
+const homePageController = require('./contorller/HomePageController.js');
+const loginPageController = require('./contorller/LoginPageController.js');
+const sighUpPageController = require('./contorller/SighUpPageController.js');
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
@@ -27,29 +30,11 @@ db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const UserModel = require('./model/user.model')
 
-app.get('/findAllUsers', function(req, res){
-    const testUsers = UserModel.findAllUsers()
-        .then((findAllUserResponse) => {
-            res.status(200).send({res_msg:"Success", res_body: findAllUserResponse});
-        }, (error) => {
-            res.status(500).send(error);
-        })
-})
 
-app.post('/addUser', function(req, res){
-    console.log(req.body);
-    let newUser = {
-        userId: uuid(),
-        account: req.body.user.account,
-        password: req.body.user.password
-    }
-    UserModel.addUser(newUser)
-        .then((addUserResponse)=>{
-            res.status(200).send({res_msg:"Success", res_body:""});
-        }, (error) => {
-            res.status(500).send(error);
-        });
-})
+// ---------------Sign In Page API---------------
+app.get('/findAllUsers', sighUpPageController.findAllUsers)
+app.post('/addUser', sighUpPageController.addUser);
+
 
 //Wildcard. The root redirect. 
 app.get('*', function (req, res) {
