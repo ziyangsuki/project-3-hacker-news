@@ -24,8 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "devreact": "react-scripts start",
-    "devnode": "nodemon ./server.js"
+    "devreact": "react-scripts start",
+    "devnode": "nodemon ./server.js"
   },
   "proxy": "http://localhost:8000",
   "eslintConfig": {
