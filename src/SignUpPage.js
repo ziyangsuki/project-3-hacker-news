@@ -38,6 +38,10 @@ class SighUpPage extends React.Component {
       })
   }
 
+  back(){
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <div className="signup-content">
@@ -65,6 +69,7 @@ class SighUpPage extends React.Component {
               <td/>
               <td/>
               <td>
+                <button onClick={()=> this.back()}>Back</button>
                 <button onClick={()=> this.signUp()}>Sigh Up</button>
               </td>
             </tr>

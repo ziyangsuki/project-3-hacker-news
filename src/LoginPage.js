@@ -34,6 +34,10 @@ class LoginPage extends React.Component {
       })
   }
 
+  back(){
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <div className="login-content">
@@ -61,6 +65,7 @@ class LoginPage extends React.Component {
               <td/>
               <td/>
               <td>
+                <button onClick={()=> this.back()}>Back</button>
                 <button onClick={()=> this.login()}>Login</button>
               </td>
             </tr>
