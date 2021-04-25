@@ -18,7 +18,6 @@ class SighUpPage extends React.Component {
   }
 
   signUp(){
-
     if(!this.state.account || !this.state.password){
       return alert("Please fill the Account and Password.");
     }
@@ -30,11 +29,10 @@ class SighUpPage extends React.Component {
     };
 
     //2. Call API, adduUser
-    axios.get('/login/all', {user: newUser})
+    axios.post('/login/register', {user: newUser})
       .then((response) => {
         console.log(response.data);
-        //2. return to front page
-
+        this.props.history.push('/');
       })
       .catch((error) => {
         console.error(error);
@@ -45,31 +43,33 @@ class SighUpPage extends React.Component {
     return (
       <div className="content">
         <table>
-          <tr>
-            <td><label>Account</label></td>
-            <td>:</td>
-            <td> 
-              <input type="text" value={this.state.account} 
-                onChange={e => this.setState({account:e.target.value})}>
-              </input>
-            </td>
-          </tr>
-          <tr>
-            <td><label>Password</label></td>
-            <td>:</td>
-            <td>
-              <input type="text" value={this.state.password} 
-                onChange={e => this.setState({password:e.target.value})}>
-              </input>
-            </td>
-          </tr>
-          <tr>
-            <td/>
-            <td/>
-            <td>
-              <button onClick={()=> this.signUp()}>Sigh Up</button>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td><label>Account</label></td>
+              <td>:</td>
+              <td> 
+                <input type="text" value={this.state.account} 
+                  onChange={e => this.setState({account:e.target.value})}>
+                </input>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Password</label></td>
+              <td>:</td>
+              <td>
+                <input type="text" value={this.state.password} 
+                  onChange={e => this.setState({password:e.target.value})}>
+                </input>
+              </td>
+            </tr>
+            <tr>
+              <td/>
+              <td/>
+              <td>
+                <button onClick={()=> this.signUp()}>Sigh Up</button>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <div>
             {this.props.token.token}

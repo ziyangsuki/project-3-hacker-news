@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid');
 const PostModel = require('../model/post.model')
 const CommentModel = require('../model/comment.model')
 
-router.get('/all', function(req, res) {
+router.get('/post/all', function(req, res) {
     return PostModel.findAllPosts()
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});

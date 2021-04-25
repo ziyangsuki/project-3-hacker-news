@@ -9,16 +9,15 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-//const postRouter = require('./routes/posts');
 
 // DB Setting Start---------------------------------------------------------
 const mongoose = require('mongoose');
 
 //Local
-//const mongoEndpoint = 'mongodb://127.0.0.1/project_3_hacker_news';
+const mongoEndpoint = 'mongodb://127.0.0.1/project_3_hacker_news';
 
 //Atlas
-const mongoEndpoint = "mongodb+srv://project-3-hacker-news:project-3-hacker-news@project-3-hacker-news.altgv.mongodb.net/project-3-hacker-news?retryWrites=true&w=majority";
+// const mongoEndpoint = "mongodb+srv://project-3-hacker-news:project-3-hacker-news@project-3-hacker-news.altgv.mongodb.net/project-3-hacker-news?retryWrites=true&w=majority";
 
 // useNewUrlParser is not required, but the old parser is deprecated
 mongoose.connect(mongoEndpoint, { useNewUrlParser: true });

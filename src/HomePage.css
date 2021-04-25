@@ -1,0 +1,19 @@
+.center {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-bar {
+    width: 70%;
+    background-color: cornsilk;
+    display: flex;
+    justify-content: center;
+}
+
+.tool-bar {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}

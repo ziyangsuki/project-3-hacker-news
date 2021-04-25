@@ -1,46 +1,37 @@
 import axios from 'axios';
 import React from 'react';
+import './HomePage.css';
 
 class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      user: "Guest",
       posts: []
     }
   }
 
   componentDidMount(){
+    //check if cookies has webtoken
     
-  }
-
-  createPost(){
-
-    if(!this.state.account || !this.state.password){
-      return alert("Please fill the Account and Password.");
-    }
-
-    //1. Assemble user data
-    let newUser = {
-      account:this.state.account,
-      password:this.state.password
-    };
-
-    //2. Call API, adduUser
-    axios.post('/addUser', {user: newUser})
+    axios.get('/home/post/all', {})
       .then((response) => {
         console.log(response.data);
-        //3. Call API, findAllUsers again
-        return axios.get('/findAllUsers')
-      })
-      .then((response) => {
-        console.log(response.data)
         this.setState({
-          users: response.data.res_body
+          posts:response.data
         })
       })
       .catch((error) => {
         console.error(error);
       })
+  }
+
+  createPost(){
+
+  }
+
+  register(){
+    this.props.history.push('/register')
   }
 
   render() {
@@ -57,15 +48,25 @@ class HomePage extends React.Component {
     }
 
     return (
-      <div>
+      <div className="center">
         <div className="nav-bar">
             <div>
-                Title
+                Hacker News
             </div>
+        </div>
+        <div className="tool-bar">
+            <div></div>
             <div>
-                <button onClick={()=> this.createPost()}>
-                    Post
-                </button>
+              <span>
+                {this.state.user}
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <button onClick={()=> this.register()}>
+                Register
+              </button>
+              <button onClick={()=> this.createPost()}>
+                Create Post
+              </button>
             </div>
         </div>
         <div className="content">
