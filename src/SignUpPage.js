@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import './SignUpPage.css';
+
 
 class SighUpPage extends React.Component {
   constructor(props){
@@ -28,12 +30,9 @@ class SighUpPage extends React.Component {
     };
 
     //2. Call API, adduUser
-    axios.post('/addUser', {user: newUser})
+    axios.get('/login/all', {user: newUser})
       .then((response) => {
         console.log(response.data);
-        console.log(response.data.res_body.token);
-        //1. set token
-        this.props.setToken({type:"SETTOKEN", val:response.data.res_body.token});
         //2. return to front page
 
       })
@@ -44,16 +43,34 @@ class SighUpPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <label>Account: </label>
-        <input type="text" value={this.state.account} 
-            onChange={e => this.setState({account:e.target.value})}>
-        </input>
-        <label>Password: </label>
-        <input type="text" value={this.state.password} 
-            onChange={e => this.setState({password:e.target.value})}>
-        </input>
-        <button onClick={()=> this.signUp()}>Sigh Up</button>
+      <div className="content">
+        <table>
+          <tr>
+            <td><label>Account</label></td>
+            <td>:</td>
+            <td> 
+              <input type="text" value={this.state.account} 
+                onChange={e => this.setState({account:e.target.value})}>
+              </input>
+            </td>
+          </tr>
+          <tr>
+            <td><label>Password</label></td>
+            <td>:</td>
+            <td>
+              <input type="text" value={this.state.password} 
+                onChange={e => this.setState({password:e.target.value})}>
+              </input>
+            </td>
+          </tr>
+          <tr>
+            <td/>
+            <td/>
+            <td>
+              <button onClick={()=> this.signUp()}>Sigh Up</button>
+            </td>
+          </tr>
+        </table>
         <div>
             {this.props.token.token}
         </div>

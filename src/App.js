@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import SignUpPage from './SighUpPage';
+import SignUpPage from './SignUpPage';
 
 class App extends React.Component {
   constructor(props){

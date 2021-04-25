@@ -9,7 +9,11 @@ UserSchema = new mongoose.Schema({
     },
     password:{
         type: String
-    }
+    },
+    createDate:{
+        type: Date, 
+        default: Date.now()
+    },
 }, {collection: 'user'})
 
 exports.UserSchema = UserSchema;

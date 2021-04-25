@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const homePageController = require('./contorller/HomePageController.js');
 const loginPageController = require('./contorller/LoginPageController.js');
-const sighUpPageController = require('./contorller/SighUpPageController.js');
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 //const postRouter = require('./routes/posts');
 
 // DB Setting Start---------------------------------------------------------
@@ -28,12 +28,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 // DB Setting End-----------------------------------------------------------
 
-const UserModel = require('./model/user.model')
+// ---------------Login Page API---------------
+app.use('/login', loginPageController);
 
-
-// ---------------Sign In Page API---------------
-app.get('/findAllUsers', sighUpPageController.findAllUsers)
-app.post('/addUser', sighUpPageController.addUser);
+// ---------------Home Page API---------------
+app.use('/home', homePageController);
 
 
 //Wildcard. The root redirect. 
