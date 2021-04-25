@@ -38,15 +38,14 @@ router.post('/login', function(req, res) {
     console.log(req.body.user.account)
 
     if (!account || !password) {
-        return res.status(400).send({res_msg:"Error", res_body: "User not found."});
+        return res.status(400).send({res_msg:"Error", res_body: "Account or paasword is empty."});
     }
 
     return UserModel.findUser(account)
         .then((response) => {
-            console.log(response);
 
-            if (response.password !== password) {
-                return res.status(402).send("Wrong account or password");
+            if (!response || response.password !== password) {
+                return res.status(402).send({res_msg:"Error", res_body: "Wrong account or password."});
             }
 
             const token = jwt.sign(response.account, 'the_secret_salty_salt')

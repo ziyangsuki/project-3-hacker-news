@@ -9,7 +9,8 @@ class SighUpPage extends React.Component {
     super(props);
     this.state = {
         account: "",
-        password: ""
+        password: "",
+        error:""
     }
   }
 
@@ -19,7 +20,10 @@ class SighUpPage extends React.Component {
 
   signUp(){
     if(!this.state.account || !this.state.password){
-      return alert("Please fill the Account and Password.");
+      this.setState({
+        error: "Please fill the Account and Password."
+      })
+      return;
     }
 
     //1. Assemble user data
@@ -45,6 +49,9 @@ class SighUpPage extends React.Component {
   render() {
     return (
       <div className="signup-content">
+        <div className="warning">
+            {this.state.error}
+        </div>
         <table>
           <tbody>
             <tr>
@@ -60,7 +67,7 @@ class SighUpPage extends React.Component {
               <td><label>Password</label></td>
               <td>:</td>
               <td>
-                <input type="text" value={this.state.password} 
+                <input type="password" value={this.state.password} 
                   onChange={e => this.setState({password:e.target.value})}>
                 </input>
               </td>

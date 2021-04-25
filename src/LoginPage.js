@@ -9,13 +9,17 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
         account: "",
-        password: ""
+        password: "",
+        error:""
     }
   }
 
   login(){
     if(!this.state.account || !this.state.password){
-      return alert("Please fill the Account and Password.");
+        this.setState({
+            error: "Please fill the Account and Password."
+        })
+        return;
     }
 
     //1. Assemble user data
@@ -30,7 +34,9 @@ class LoginPage extends React.Component {
         this.props.history.push('/');
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+            error: error.response.data.res_body
+        })
       })
   }
 
@@ -41,6 +47,9 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className="login-content">
+        <div className="warning">
+            {this.state.error}
+        </div>
         <table>
           <tbody>
             <tr>
@@ -56,7 +65,7 @@ class LoginPage extends React.Component {
               <td><label>Password</label></td>
               <td>:</td>
               <td>
-                <input type="text" value={this.state.password} 
+                <input type="password" value={this.state.password} 
                   onChange={e => this.setState({password:e.target.value})}>
                 </input>
               </td>
