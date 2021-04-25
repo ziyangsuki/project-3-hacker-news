@@ -1,4 +1,5 @@
 .center {
+    width: 100%;
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -6,14 +7,22 @@
 }
 
 .nav-bar {
-    width: 70%;
+    width: 60%;
     background-color: cornsilk;
     display: flex;
     justify-content: center;
 }
 
 .tool-bar {
-    width: 70%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
+}
+
+.content{
+    width: 60%;
+}
+
+.post-content{
+    width: 100%;
 }

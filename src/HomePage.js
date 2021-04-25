@@ -1,24 +1,28 @@
 import axios from 'axios';
 import React from 'react';
 import './HomePage.css';
+import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
 
 class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      user: "Guest",
       posts: []
     }
   }
 
   componentDidMount(){
-    //check if cookies has webtoken
+    // Check if cookies has webtoken
+    if(Cookies.get('webtoken')){
+      this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+    }
     
+    // Get all posts
     axios.get('/home/post/all', {})
       .then((response) => {
-        console.log(response.data);
         this.setState({
-          posts:response.data
+          posts:response.data.res_body
         })
       })
       .catch((error) => {
@@ -34,6 +38,20 @@ class HomePage extends React.Component {
     this.props.history.push('/register')
   }
 
+  login(){
+    this.props.history.push('/login')
+  }
+
+  logout(){
+    axios.post('/login//logout', {})
+      .then((response) => {
+        this.props.setToken({type: "CLEARTOKEN"});
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+
   render() {
 
     //Assemble render posts
@@ -41,8 +59,40 @@ class HomePage extends React.Component {
     for(let i = 0; i < this.state.posts.length; i++){
       const post = this.state.posts[i];
       renderedPosts.push(
-        <div key={i}>
-          <span>{i+1}.</span><span>{post.title}</span><span>{post.date}</span><span>{post.numOfComments}</span>
+        <tr key={i}>
+          <td>
+            <div>
+              {i+1}. {post.title}
+            </div>
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;{post.content} | {post.account} | comments: {post.commentNum} | {post.createDate}
+            </div>
+          </td>
+        </tr>
+      )
+    }
+
+    let loginButton;
+    if(this.props.login.webtoken === ""){
+      loginButton = (
+        <div>
+          <button onClick={()=> this.login()}>
+            Login
+          </button>
+          <button onClick={()=> this.register()}>
+            Register
+          </button>
+        </div>
+      )
+    }else{
+      loginButton = (
+        <div>
+          <button onClick={()=> this.logout()}>
+            Logout
+          </button>
+          <button onClick={()=> this.createPost()}>
+            Create Post
+          </button>
         </div>
       )
     }
@@ -58,23 +108,39 @@ class HomePage extends React.Component {
             <div></div>
             <div>
               <span>
-                {this.state.user}
+                {this.props.login.account}
               </span>
               &nbsp;&nbsp;&nbsp;
-              <button onClick={()=> this.register()}>
-                Register
-              </button>
-              <button onClick={()=> this.createPost()}>
-                Create Post
-              </button>
+              {loginButton}
             </div>
         </div>
         <div className="content">
-            {renderedPosts}
+          <table className="post-content">
+            <tbody>
+              {renderedPosts}
+            </tbody>
+          </table>
         </div>
       </div>
     )
   }
 }
 
-export default HomePage;
+let mapDispatchToProps = function(dispatch, props) {
+    return {
+        setToken: (val) => {
+          dispatch(val);
+        }
+    }
+}
+  
+let mapStateToProps = function(state, props) {
+    return {
+      login: state.login
+    }
+}
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomePage);

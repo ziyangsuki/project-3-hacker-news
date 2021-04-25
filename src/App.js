@@ -3,16 +3,10 @@ import './App.css';
 import { connect } from 'react-redux';
 import SignUpPage from './SignUpPage';
 import HomePage from './HomePage';
+import LoginPage from './LoginPage';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
-  componentDidMount(){
-
-  }
 
   render() {
     return (
@@ -20,6 +14,7 @@ class App extends React.Component {
         <Router>
             <Switch>
                 <Route exact path={"/"} component={HomePage}/>
+                <Route exact path={"/login"} component={LoginPage}/>
                 <Route exact path={"/register"} component={SignUpPage}/>
                 <Route render={() => <h1>Page not found!</h1>} />
             </Switch>

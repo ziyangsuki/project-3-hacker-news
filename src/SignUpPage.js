@@ -31,7 +31,6 @@ class SighUpPage extends React.Component {
     //2. Call API, adduUser
     axios.post('/login/register', {user: newUser})
       .then((response) => {
-        console.log(response.data);
         this.props.history.push('/');
       })
       .catch((error) => {
@@ -41,7 +40,7 @@ class SighUpPage extends React.Component {
 
   render() {
     return (
-      <div className="content">
+      <div className="signup-content">
         <table>
           <tbody>
             <tr>
@@ -71,9 +70,6 @@ class SighUpPage extends React.Component {
             </tr>
           </tbody>
         </table>
-        <div>
-            {this.props.token.token}
-        </div>
       </div>
     )
   }
@@ -81,16 +77,11 @@ class SighUpPage extends React.Component {
 
 let mapDispatchToProps = function(dispatch, props) {
     return {
-        setToken: (val) => {
-          dispatch(val);
-        }
     }
 }
   
 let mapStateToProps = function(state, props) {
-    console.log(state)
     return {
-        token: state.sighUp
     }
 }
   
