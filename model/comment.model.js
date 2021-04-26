@@ -8,9 +8,24 @@ function addComment(comment){
     return CommentModel.create(comment);
 }
 
-function findComments(postId) {
-    return CommentModel.find({commentId: commentId}).exec();
+function findCommentsByPostId(postId) {
+    return CommentModel.find({postId: postId}).exec();
 }
 
-exports.findComments = findComments;
+function findCommentByCommentId(commentId) {
+    return CommentModel.findOne({commentId}).exec();
+}
+
+function deleteCommentByCommentId(commentId) {
+    return CommentModel.deleteOne({commentId}).exec();
+}
+
+function updateCommentByCommentId(commentId, updatedContent) {
+    return CommentModel.updateOne({commentId:commentId}, updatedContent);
+}
+
+exports.findComments = findCommentsByPostId;
 exports.addComment = addComment;
+exports.findCommentByCommentId = findCommentByCommentId;
+exports.deleteCommentByCommentId = deleteCommentByCommentId;
+exports.updateCommentByCommentId = updateCommentByCommentId;

@@ -12,6 +12,10 @@ function findAllPosts(){
     return PostModel.find().exec();
 }
 
+function findPostById(id) {
+    return PostModel.findOne({postId: id});
+}
+
 //updateDoc is an object
 function editPost(postId, updateDoc){
     return PostModel.findByIdAndUpdate({_id: postId},
@@ -27,3 +31,4 @@ exports.addPost = addPost;
 exports.findAllPosts = findAllPosts;
 exports.editPost = editPost;
 exports.deletePostById = deletePostById;
+exports.findPostById = findPostById;
