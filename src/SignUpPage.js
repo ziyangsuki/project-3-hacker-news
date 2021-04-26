@@ -33,7 +33,7 @@ class SighUpPage extends React.Component {
     };
 
     //2. Call API, adduUser
-    axios.post('/register', {user: newUser})
+    axios.post('/login/register', {user: newUser})
       .then((response) => {
         this.props.history.push('/');
       })
