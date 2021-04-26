@@ -9,22 +9,22 @@ class CreatePostPage extends React.Component {
     super(props);
     this.state = {
       title: "",
-      userId: "",
+      account: "",
       content: "",
       error: ""
     }
   }
 
   createPost(){
-    if(!this.state.title || !this.state.userId){
+    if(!this.state.title || !this.state.content){
       this.setState({
-          error: "Please fill the Title and UserId."
+          error: "Please fill the Title and Content."
       })
       return;
     }
     let post = {
       title:this.state.title,
-      userId:this.state.userId,
+      account:this.state.account,
       content: this.state.content,
     };
 
@@ -52,21 +52,21 @@ class CreatePostPage extends React.Component {
         </div>
         <table>
           <tbody>
+          <tr>
+              <td><label>Account Name</label></td>
+              <td>:</td>
+              <td> 
+                <input type="text" value={this.state.account} 
+                  onChange={e => this.setState({account:e.target.value})}>
+                </input>
+              </td>
+            </tr>
             <tr>
               <td><label>Title</label></td>
               <td>:</td>
               <td> 
                 <input type="text" value={this.state.title} 
                   onChange={e => this.setState({title:e.target.value})}>
-                </input>
-              </td>
-            </tr>
-            <tr>
-              <td><label>UserId</label></td>
-              <td>:</td>
-              <td>
-                <input type="userId" value={this.state.userId} 
-                  onChange={e => this.setState({userId:e.target.value})}>
                 </input>
               </td>
             </tr>

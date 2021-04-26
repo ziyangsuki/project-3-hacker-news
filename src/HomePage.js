@@ -84,18 +84,26 @@ class HomePage extends React.Component {
             <div>
               &nbsp;&nbsp;&nbsp;&nbsp;{post.content} | {post.account} | comments: {post.commentNum} | {post.createDate}
             </div>
-            <span>
+          </td>
+        </tr>
+      )
+      let modifyButton;
+      if(post.account === this.props.login.account){
+        modifyButton = (
+          <span>
             <button onClick={()=> this.edit()}>
               Edit
             </button>
             <button onClick={()=> this.delete(post._id)}>
               Delete
             </button>
-            </span>
-          </td>
-        </tr>
-      )
+          </span>
+        )
+        renderedPosts.push(modifyButton)
+      }
+
     }
+    
 
     let loginButton;
     if(this.props.login.webtoken === ""){
@@ -110,6 +118,7 @@ class HomePage extends React.Component {
         </div>
       )
     }else{
+      console.log(this.props.login)
       loginButton = (
         <div>
           <button onClick={()=> this.logout()}>
