@@ -12,5 +12,18 @@ function findAllPosts(){
     return PostModel.find().exec();
 }
 
+//updateDoc is an object
+function editPost(postId, updateDoc){
+    return PostModel.findByIdAndUpdate({_id: postId},
+        updateDoc);
+}
+
+function deletePostById(postId){
+    return PostModel.findByIdAndDelete(postId);
+}
+
+
 exports.addPost = addPost;
 exports.findAllPosts = findAllPosts;
+exports.editPost = editPost;
+exports.deletePostById = deletePostById;

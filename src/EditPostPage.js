@@ -1,46 +1,42 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import './SignUpPage.css';
+import './EditPostPage.css';
 
 
-class SighUpPage extends React.Component {
+class EditPostPage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        account: "",
-        password: "",
-        error:""
+      title: "",
+      content: "",
+      error: ""
     }
   }
 
-  componentDidMount(){
-    
-  }
-
-  signUp(){
-    if(!this.state.account || !this.state.password){
+  editPost(){
+    if(!this.state.title){
       this.setState({
-        error: "Please fill the Account and Password."
+          error: "Please fill the Title."
       })
       return;
     }
-
-    //1. Assemble user data
-    let newUser = {
-      account:this.state.account,
-      password:this.state.password
+    let post = {
+      title:this.state.title,
+      content: this.state.content,
     };
 
-    //2. Call API, adduUser
-    axios.post('/register', {user: newUser})
+    axios.put('/home/post', post)
       .then((response) => {
         this.props.history.push('/');
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+            error: error.response.data.res_body
+        })
       })
   }
+
 
   back(){
     this.props.history.push('/');
@@ -48,27 +44,27 @@ class SighUpPage extends React.Component {
 
   render() {
     return (
-      <div className="signup-content">
+      <div className="eidtPost-content">
         <div className="warning">
             {this.state.error}
         </div>
         <table>
           <tbody>
             <tr>
-              <td><label>Account</label></td>
+              <td><label>Title</label></td>
               <td>:</td>
               <td> 
-                <input type="text" value={this.state.account} 
-                  onChange={e => this.setState({account:e.target.value})}>
+                <input type="text" value={this.state.title} 
+                  onChange={e => this.setState({title:e.target.value})}>
                 </input>
               </td>
             </tr>
             <tr>
-              <td><label>Password</label></td>
+              <td><label>New Content</label></td>
               <td>:</td>
-              <td>
-                <input type="password" value={this.state.password} 
-                  onChange={e => this.setState({password:e.target.value})}>
+              <td> 
+                <input type="text" value={this.state.content} 
+                  onChange={e => this.setState({content:e.target.value})}>
                 </input>
               </td>
             </tr>
@@ -77,7 +73,7 @@ class SighUpPage extends React.Component {
               <td/>
               <td>
                 <button onClick={()=> this.back()}>Back</button>
-                <button onClick={()=> this.signUp()}>Sigh Up</button>
+                <button onClick={()=> this.editPost()}>Submit</button>
               </td>
             </tr>
           </tbody>
@@ -88,16 +84,16 @@ class SighUpPage extends React.Component {
 }
 
 let mapDispatchToProps = function(dispatch, props) {
-    return {
-    }
+  return {
+  }
 }
-  
+
 let mapStateToProps = function(state, props) {
-    return {
-    }
+  return {
+  }
 }
-  
+
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SighUpPage);
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPostPage);

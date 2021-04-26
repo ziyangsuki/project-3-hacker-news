@@ -17,21 +17,38 @@ class HomePage extends React.Component {
     if(Cookies.get('webtoken')){
       this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
     }
-    
     // Get all posts
     axios.get('/home/post/all', {})
-      .then((response) => {
-        this.setState({
-          posts:response.data.res_body
-        })
+    .then((response) => {
+      this.setState({
+        posts:response.data.res_body
       })
-      .catch((error) => {
-        console.error(error);
-      })
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   createPost(){
+    this.props.history.push('/createPost')
+  }
 
+  edit(){
+    this.props.history.push('/editPost')
+  }
+
+  delete(postId){
+    axios.delete('/home/post/' + postId, {})
+      .then((response) => {
+        console.log('successfully deleted ' + postId);
+        let updatedposts = this.state.posts.filter((p) => p._id !== postId);
+        this.setState({
+          posts: updatedposts
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   register(){
@@ -67,6 +84,14 @@ class HomePage extends React.Component {
             <div>
               &nbsp;&nbsp;&nbsp;&nbsp;{post.content} | {post.account} | comments: {post.commentNum} | {post.createDate}
             </div>
+            <span>
+            <button onClick={()=> this.edit()}>
+              Edit
+            </button>
+            <button onClick={()=> this.delete(post._id)}>
+              Delete
+            </button>
+            </span>
           </td>
         </tr>
       )
