@@ -16,7 +16,7 @@ export default class Comment extends React.Component {
     }
 
     findCommentsByCommentId() {
-        axios.get(`/comment/comments/${this.postId}/${this.commentId}`, {})
+        axios.get(`home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
                 this.setState({
@@ -29,7 +29,7 @@ export default class Comment extends React.Component {
     }
 
     deleteCommentsByCommentId() {
-        axios.get(`/comment/comments/${this.postId}/${this.commentId}`, {})
+        axios.get(`home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
                 this.setState({
@@ -42,7 +42,7 @@ export default class Comment extends React.Component {
     }
 
     updateCommentsByCommentId() {
-        axios.patch(`/comment/comments/${this.postId}/${this.commentId}`, this.state)
+        axios.patch(`home/comment/comments/${this.postId}/${this.commentId}`, this.state)
             .then((response) => {
                 console.log(response.data);
                 this.setState({

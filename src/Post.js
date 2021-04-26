@@ -13,7 +13,7 @@ export default class Post extends React.Component {
     }
 
     findCommentsByPostId() {
-        axios.get(`/comment/comments/${this.postId}`, {})
+        axios.get(`home/comment/comments/${this.postId}`, {})
             .then((response) => {
                 console.log(response.data);
                 this.setState({
@@ -26,7 +26,7 @@ export default class Post extends React.Component {
     }
 
     findPostById() {
-        axios.get(`/post/${this.postId}`, {})
+        axios.get(`home/post/${this.postId}`, {})
             .then((response) => {
                 console.log(response.data);
                 this.setState({
