@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
 import './CreatePostPage.css';
 
 
@@ -10,13 +11,16 @@ class CreatePostPage extends React.Component {
     this.postId = this.props.match.params.postId;
     this.state = {
       title: "",
-      account: "",
       content: "",
       error: ""
     }
   }
 
   componentDidMount() {
+    // Check if cookies has webtoken
+    if(Cookies.get('webtoken')){
+      this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+    }
     if (this.postId) {
       axios.get(`/home/post/${this.postId}`, {})
           .then((response) => {
@@ -43,7 +47,7 @@ class CreatePostPage extends React.Component {
     }
     let post = {
       title:this.state.title,
-      account:this.state.account,
+      account: this.props.login.account,
       content: this.state.content,
     };
 
@@ -84,15 +88,6 @@ class CreatePostPage extends React.Component {
         </div>
         <table>
           <tbody>
-          <tr>
-              <td><label>Account Name</label></td>
-              <td>:</td>
-              <td> 
-                <input type="text" value={this.state.account} 
-                  onChange={e => this.setState({account:e.target.value})}>
-                </input>
-              </td>
-            </tr>
             <tr>
               <td><label>Title</label></td>
               <td>:</td>
@@ -128,11 +123,15 @@ class CreatePostPage extends React.Component {
 
 let mapDispatchToProps = function(dispatch, props) {
   return {
+      setToken: (val) => {
+        dispatch(val);
+      }
   }
 }
 
 let mapStateToProps = function(state, props) {
   return {
+      login: state.login
   }
 }
 
