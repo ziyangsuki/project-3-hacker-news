@@ -160,7 +160,7 @@ class PostPage extends React.Component {
                 </div>
                 <div className="comment-outline">
                 {comments?.map((comment) => (
-                    <Comment postId={this.postId} commentId={comment.commentId}></Comment>
+                    <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId}></Comment>
                 ))}
                 </div>
 
