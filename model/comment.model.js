@@ -21,7 +21,7 @@ function deleteCommentByCommentId(commentId) {
 }
 
 function updateCommentByCommentId(commentId, updatedContent) {
-    return CommentModel.updateOne({commentId:commentId}, updatedContent);
+    return CommentModel.findOneAndUpdate({commentId:commentId}, updatedContent);
 }
 
 exports.findComments = findCommentsByPostId;

@@ -95,10 +95,7 @@ router.delete('/comment/comments/:postId/:commentId', function(req, res) {
 })
 
 router.patch('/comment/comments/:postId/:commentId', function(req, res) {
-    return CommentModel.updateCommentsByCommentId({
-        commentID:req.params.commentId,
-        updatedContent:req.body.content
-    })
+    return CommentModel.updateCommentByCommentId(req.params.commentId, req.body)
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});
     }, (error) => {
