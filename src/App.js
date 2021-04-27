@@ -18,8 +18,9 @@ class App extends React.Component {
                 <Route exact path={"/"} component={HomePage}/>
                 <Route exact path={"/login"} component={LoginPage}/>
                 <Route exact path={"/register"} component={SignUpPage}/>
-                <Route exact path={"/createPost"} component={CreatePostPage}/>
+                <Route exact path={"/home/post/new"} component={CreatePostPage}/>
                 <Route exact path={"/home/post/:postId"} component={Post}/>
+                <Route exact path={"/home/post/edit/:postId"} component={CreatePostPage} />
                 <Route render={() => <h1>Page not found!</h1>} />
             </Switch>
         </Router>

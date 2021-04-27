@@ -30,11 +30,11 @@ class HomePage extends React.Component {
   }
 
   createPost(){
-    this.props.history.push('/createPost')
+    this.props.history.push('/home/post/new')
   }
 
-  edit(){
-    this.props.history.push('/editPost')
+  edit(postId){
+    this.props.history.push(`/home/post/edit/${postId}`)
   }
 
   linkToPost(postId) {
@@ -95,7 +95,7 @@ class HomePage extends React.Component {
       if(post.account === this.props.login.account){
         modifyButton = (
           <span>
-            <button onClick={()=> this.edit()}>
+            <button onClick={()=> this.edit(post._id)}>
               Edit
             </button>
             <button onClick={()=> this.delete(post._id)}>

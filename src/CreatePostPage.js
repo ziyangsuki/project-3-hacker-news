@@ -7,11 +7,30 @@ import './CreatePostPage.css';
 class CreatePostPage extends React.Component {
   constructor(props){
     super(props);
+    this.postId = this.props.match.params.postId;
     this.state = {
       title: "",
       account: "",
       content: "",
       error: ""
+    }
+  }
+
+  componentDidMount() {
+    if (this.postId) {
+      axios.get(`/home/post/${this.postId}`, {})
+          .then((response) => {
+              // console.log(response);
+              const res_body = response.data.res_body;
+              this.setState({
+                  title: res_body.title,
+                  content: res_body.content,
+                  account: res_body.account
+              });
+          })
+          .catch((error) => {
+              console.error(error);
+          })
     }
   }
 
@@ -28,7 +47,9 @@ class CreatePostPage extends React.Component {
       content: this.state.content,
     };
 
-    axios.post('/home/post', post)
+    if (this.postId) {
+      // postId exists, which means we'd like to edit instead of creating the post
+      axios.put(`/home/post/${this.postId}`, post)
       .then((response) => {
         this.props.history.push('/');
       })
@@ -37,6 +58,17 @@ class CreatePostPage extends React.Component {
             error: error.response.data.res_body
         })
       })
+    } else {
+      axios.post('/home/post', post)
+      .then((response) => {
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        this.setState({
+            error: error.response.data.res_body
+        })
+      })
+    }
   }
 
 

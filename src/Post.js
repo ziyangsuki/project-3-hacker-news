@@ -1,6 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 const { v4: uuid } = require('uuid');
 
@@ -32,6 +33,7 @@ class Post extends React.Component {
             })
     }
 
+
     findCommentsByPostId() {
         // find comments
         axios.get(`/home/comment/comments/${this.postId}`, {})
@@ -47,6 +49,10 @@ class Post extends React.Component {
     }
 
     componentDidMount() {
+        // Check if cookies has webtoken
+        if(Cookies.get('webtoken')){
+            this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+        }
         this.findPostById();
         this.findCommentsByPostId();
     }
@@ -102,14 +108,29 @@ class Post extends React.Component {
         document.getElementById(id).style.display = display === 'none' ? 'inline' : 'none';
     }
 
+    edit() {
+        this.props.history.push(`/home/post/edit/${this.postId}`)
+    }
+
     render() {
         const post = this.state.post;
         const comments = this.state.comments;
 
+        let editButton;
+        if(this.props.login && this.props.login.account && post.account === this.props.login.account){
+            editButton = (
+            <span>
+                <button onClick={()=> this.edit()}>
+                Edit
+                </button>
+            </span>
+            )
+        }
         return (
+            
             <div>
 
-
+                {editButton}
                 <div><h1>{post.title}</h1></div>
                 <div>Account: {post.account}</div>
                 <div>CreateDate: {post.createDate}</div>
@@ -135,7 +156,6 @@ class Post extends React.Component {
         )
 
     }
-
 }
 
 let mapDispatchToProps = function(dispatch, props) {
@@ -148,7 +168,7 @@ let mapDispatchToProps = function(dispatch, props) {
 
 let mapStateToProps = function(state, props) {
     return {
-      login: state.login
+        login: state.login
     }
 }
   

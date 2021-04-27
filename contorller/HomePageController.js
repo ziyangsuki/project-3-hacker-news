@@ -37,7 +37,7 @@ router.get('/post/:postId', function(req,res) {
 
 router.put('/post/:postId', function(req,res) {
     const postId = req.params.postId;
-    const updateDoc = req.params.updateDoc;
+    const updateDoc = req.body;
     return PostModel.editPost(postId, updateDoc)
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});
