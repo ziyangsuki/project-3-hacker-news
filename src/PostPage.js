@@ -130,16 +130,16 @@ class PostPage extends React.Component {
         if (this.props.login && this.props.login.account && post.account === this.props.login.account) {
             editButton = (
                 <span>
-                    <div className="button" onClick={() => this.edit()}>
+                    <button className="button" onClick={() => this.edit()}>
                         Edit
-                </div>
+                </button>
                 </span>
             )
         }
         return (
 
             <div className="body">
-                <div className="button" onClick={() => this.back()}>Back</div>
+                <button className="button" onClick={() => this.back()}>Back</button>
 
                 <div className="post-outline">
                     <div><h1>{post.title}</h1></div>
@@ -153,7 +153,7 @@ class PostPage extends React.Component {
                     </div>
                 </div>
 
-                <div className="button" onClick={() => this.showOrHideInput('addComment')}>Add Comment</div>
+                <button className="button" onClick={() => this.showOrHideInput('addComment')}>Add Comment</button>
 
                 <div id="addComment" style={{ display: 'none' }} >
                     <div className="flex-box">

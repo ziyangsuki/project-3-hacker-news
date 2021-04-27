@@ -104,16 +104,16 @@ class Comment extends React.Component {
             modifyButtonSet = (
                 <div>
                     <div className="action-buttons-grid">
-                        <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</div>
-                        <div className="button" onClick={() => this.deleteCommentByCommentId()}>Delete Comment</div>
+                        <button className="button" onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</button>
+                        <button className="button" onClick={() => this.deleteCommentByCommentId()}>Delete Comment</button>
                     </div>
                     <div id={comment.commentId} style={{ display: 'none' }} >
                         <input type="text"
                         // <input type="text" value={comment.content}
                             onChange={(e) => this.setState({ content: e.target.value })} />
                             <div className="action-buttons-grid">
-                        <div className="button" onClick={() => this.updateCommentByCommentId()}>Submit</div>
-                        <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Cancel</div>
+                        <button className="button" onClick={() => this.updateCommentByCommentId()}>Submit</button>
+                        <button className="button" onClick={() => this.showOrHideInput(this.commentId)}>Cancel</button>
                         </div>
                     </div>
                     </div>
