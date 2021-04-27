@@ -82,14 +82,14 @@ class CreatePostPage extends React.Component {
 
   render() {
     return (
-      <div className="createPost-content">
+      <div className="body">
         <div className="warning">
             {this.state.error}
         </div>
         <table>
           <tbody>
             <tr>
-              <td><label>Title</label></td>
+              <td><label><h3>Title</h3></label></td>
               <td>:</td>
               <td> 
                 <input type="text" value={this.state.title} 
@@ -98,7 +98,7 @@ class CreatePostPage extends React.Component {
               </td>
             </tr>
             <tr>
-              <td><label>Content</label></td>
+              <td><label><h3>Content</h3></label></td>
               <td>:</td>
               <td> 
                 <input type="text" value={this.state.content} 
@@ -110,8 +110,8 @@ class CreatePostPage extends React.Component {
               <td/>
               <td/>
               <td>
-                <button onClick={()=> this.back()}>Back</button>
-                <button onClick={()=> this.createPost()}>Submit</button>
+                <button className="button" onClick={()=> this.back()}>Back</button>
+                <button className="button" onClick={()=> this.createPost()}>Submit</button>
               </td>
             </tr>
           </tbody>

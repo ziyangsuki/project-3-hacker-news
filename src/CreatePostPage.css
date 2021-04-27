@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    background-color: #FFE7D0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    /* width: 100vw; */
+    min-height: 100vh;
+}
+
+.button {
+    background-color: #FC8E20;
+    color: white;
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
+
