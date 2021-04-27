@@ -165,7 +165,7 @@ class PostPage extends React.Component {
                         <div className="button" onClick={() => this.showOrHideInput('addComment')}>Cancel</div>
                     </div>
                 </div>
-                <div className="comment-outline">
+                <div className="comment-outline" style={{display:comments.length>0?'inline':'none'}}>
                     {comments?.map((comment) => (
                         <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId} func={this.getCommentNum}></Comment>
                     ))}

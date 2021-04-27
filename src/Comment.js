@@ -103,7 +103,7 @@ class Comment extends React.Component {
         if (comment.account === this.props.login.account) {
             modifyButtonSet = (
                 <div>
-                    <div className="action">
+                    <div className="action-buttons-grid">
                         <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</div>
                         <div className="button" onClick={() => this.deleteCommentByCommentId()}>Delete Comment</div>
                     </div>
@@ -111,19 +111,22 @@ class Comment extends React.Component {
                         <input type="text"
                         // <input type="text" value={comment.content}
                             onChange={(e) => this.setState({ content: e.target.value })} />
+                            <div className="action-buttons-grid">
                         <div className="button" onClick={() => this.updateCommentByCommentId()}>Submit</div>
                         <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Cancel</div>
-                    </div></div>
+                        </div>
+                    </div>
+                    </div>
             )
         }
 
         return (
             <div className="comment-body">
-                <div className="info-grid">
-                    <div>{comment.account}</div>
-                    <div>{comment.createDate}</div>
+                <div className="info-grid" id="comment-info">
+                    <div>Account: {comment.account}</div>
+                    <div>Create Date: {comment.createDate}</div>
                 </div>
-                <div>{comment.content}</div>
+                <div className="comment-content"><span>{comment.content}</span></div>
                 {modifyButtonSet}
             </div>
 
