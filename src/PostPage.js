@@ -102,11 +102,12 @@ class PostPage extends React.Component {
                 this.setState({
                     comments: this.state.comments.concat(response.data.res_body)
                 })
+                this.getCommentNum(this.postId);
             })
             .catch((error) => {
                 console.error(error);
             })
-        this.getCommentNum(this.postId);
+        
     }
 
     showOrHideInput(id) {
@@ -157,7 +158,7 @@ class PostPage extends React.Component {
 
                 <div id="addComment" style={{ display: 'none' }} >
                     <div className="flex-box">
-                        <input type="text"
+                        <textarea type="text"
                             onChange={(e) => this.setState({ commentToAdd: e.target.value })} />
                     </div>
                     <div className="action-buttons-grid">
@@ -170,7 +171,7 @@ class PostPage extends React.Component {
                         <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId} func={this.getCommentNum}></Comment>
                     ))}
                 </div>
-
+                
             </div>
 
         )

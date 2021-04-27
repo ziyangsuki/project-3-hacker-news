@@ -64,12 +64,13 @@ class Comment extends React.Component {
             .then((response) => {
                 // console.log(response.data);
                 console.log("Comment deleted")
+                this.getPostCommentNum(this.postId);
             })
             .catch((error) => {
                 console.error(error);
             })
         // this.getCommentNum();
-        this.getPostCommentNum(this.postId);
+        
     }
 
     updateCommentByCommentId() {
