@@ -59,7 +59,7 @@ router.delete('/post/:postId', function(req,res) {
 /*Comments*/
 
 router.get('/comment/comments/:postId', function(req, res) {
-    return CommentModel.findCommentsByPostId(req.params.postId)
+    return CommentModel.findComments(req.params.postId)
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});
     }, (error) => {
@@ -68,7 +68,16 @@ router.get('/comment/comments/:postId', function(req, res) {
 })
 
 router.get('/comment/comments/:postId/:commentId', function(req, res) {
-    return CommentModel.deleteCommentsByCommentId(req.params.commentId)
+    return CommentModel.findCommentByCommentId(req.params.commentId)
+    .then(response => {
+        res.status(200).send({res_msg:"Success", res_body: response});
+    }, (error) => {
+        res.status(500).send({res_msg:"Error", res_body: error});
+    })
+})
+
+router.post('/comment/comments/:postId', function(req, res) {
+    return CommentModel.addComment(req.body)
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});
     }, (error) => {
@@ -77,7 +86,7 @@ router.get('/comment/comments/:postId/:commentId', function(req, res) {
 })
 
 router.delete('/comment/comments/:postId/:commentId', function(req, res) {
-    return CommentModel.deleteCommentsByCommentId(req.params.commentId)
+    return CommentModel.deleteCommentByCommentId(req.params.commentId)
     .then(response => {
         res.status(200).send({res_msg:"Success", res_body: response});
     }, (error) => {

@@ -13,11 +13,11 @@ function findCommentsByPostId(postId) {
 }
 
 function findCommentByCommentId(commentId) {
-    return CommentModel.findOne({commentId}).exec();
+    return CommentModel.findOne({commentId:commentId}).exec();
 }
 
 function deleteCommentByCommentId(commentId) {
-    return CommentModel.deleteOne({commentId}).exec();
+    return CommentModel.findOneAndDelete({commentId:commentId}).exec();
 }
 
 function updateCommentByCommentId(commentId, updatedContent) {

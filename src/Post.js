@@ -1,7 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 import axios from 'axios';
-
+const { v4: uuid } = require('uuid');
 
 export default class Post extends React.Component {
     
@@ -21,20 +21,19 @@ export default class Post extends React.Component {
         componentDidMount() {
         axios.get(`/home/post/${this.postId}`, {})
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 this.setState({
                     post: response.data.res_body
                 })
-                console.log(this.state);
             })
             .catch((error) => {
                 console.error(error);
             })
-    }
+    // }
 
-    findCommentsByPostId() {
-        
-        axios.get('/home/comment/comments/'+this.postId, {})
+    // findCommentsByPostId() {
+        // find comments
+        axios.get(`/home/comment/comments/${this.postId}`, {})
             .then((response) => {
                 this.setState({
                     comments: response.data.res_body
@@ -46,25 +45,59 @@ export default class Post extends React.Component {
         
     }
 
+    showOrHideInput() {
+        const display = document.getElementById('addComment').style.display;
+        document.getElementById('addComment').style.display = display === 'none' ? 'inline' : 'none';
+    }
 
+    addComment() {
+        const newComment = {
+            postId: this.postId,
+            content: this.state.commentToAdd,
+            account: 'test',
+            commentId: uuid()
+        }
+        console.log(newComment.commentId);
+        axios.post(`/home/comment/comments/${this.postId}`, newComment)
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    comments: this.state.comments.concat(response.data.res_body)
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
 
     render() {
-        //  this.findPostById();
-        // const comments = this.findCommentsByPostId();
-        // console.log(this.state.post);
         const post = this.state.post;
         const comments = this.state.comments;
         return (
             <div>
-                {/* <button onClick={()=>this.findPostById()}>click</button> */}
-                {/* <div>{this.post}</div> */}
+
+
                 <div><h1>{post.title}</h1></div>
                 <div>Account: {post.account}</div>
                 <div>CreateDate: {post.createDate}</div>
                 <div>Content: {post.content}</div>
 
+
+
+
+
+                <div className="action">
+                    <div onClick={() => this.showOrHideInput()}>Add Comment</div>
+                </div>
+                <div id="addComment" style={{ display: 'none' }} >
+                    <input type="text" 
+                        onChange={(e) => this.setState({commentToAdd: e.target.value})} />
+                    <div onClick={() => this.addComment()}>Submit</div>
+                    <div onClick={() => this.showOrHideInput()}>Cancel</div>
+                </div>
+
                 {comments?.map((comment) => (
-                    <Comment postId={this.id} commentId={comment.commentId}></Comment>
+                    <Comment postId={this.postId} commentId={comment.commentId}></Comment>
                 ))}
                 
             </div>

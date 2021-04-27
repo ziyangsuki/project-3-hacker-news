@@ -8,19 +8,21 @@ export default class Comment extends React.Component {
         super(props);
         this.postId = props.postId;
         this.commentId = props.commentId;
-        this.comment = this.findCommentsByCommentId(this.id);
         this.state = {
+            comment: Object,
             content:'',
             updateDate: Date.now()
         };
     }
 
-    findCommentsByCommentId() {
-        axios.get(`home/comment/comments/${this.postId}/${this.commentId}`, {})
+    // get comment by id
+    componentDidMount() {
+        console.log(this)
+        axios.get(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
                 this.setState({
-                    posts: response.data
+                    comment: response.data.res_body
                 })
             })
             .catch((error) => {
@@ -28,13 +30,10 @@ export default class Comment extends React.Component {
             })
     }
 
-    deleteCommentsByCommentId() {
-        axios.get(`home/comment/comments/${this.postId}/${this.commentId}`, {})
+    deleteCommentByCommentId() {
+        axios.delete(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
-                this.setState({
-                    posts: response.data
-                })
             })
             .catch((error) => {
                 console.error(error);
@@ -42,11 +41,11 @@ export default class Comment extends React.Component {
     }
 
     updateCommentsByCommentId() {
-        axios.patch(`home/comment/comments/${this.postId}/${this.commentId}`, this.state)
+        axios.patch(`/home/comment/comments/${this.postId}/${this.commentId}`, this.state)
             .then((response) => {
                 console.log(response.data);
                 this.setState({
-                    posts: response.data
+                    comment: response.data.res_body
                 })
             })
             .catch((error) => {
@@ -60,13 +59,13 @@ export default class Comment extends React.Component {
     }
 
     render() {
-
+        const comment = this.state.comment;
 
         return (
             <div>
-                <div>{this.comment.account}</div>
-                <div>{this.comment.createDate}</div>
-                <div>{this.comment.content}</div>
+                <div>{comment.account}</div>
+                <div>{comment.createDate}</div>
+                <div>{comment.content}</div>
                 <div className="action">
                     <div onClick={() => this.showOrHideInput()}>Edit Comment</div>
                     <div onClick={() => this.deleteCommentByCommentId()}>Delete Comment</div>
@@ -79,9 +78,10 @@ export default class Comment extends React.Component {
                             <button onClick={() => this.showOrHideInput()}>Cancel</button>
                         </label>
                     </form> */}
-                    <input type="text" value={this.comment.content}
-                        onChange={(e) => this.setState(e.target.value)} />
-                    <div onChange={() => this.updateCommentByCommentId()}>Submit</div>
+                    {/* <input type="text" value={comment.content} */}
+                    <input type="text"
+                        onChange={(e) => this.setState({content: e.target.value})} />
+                    <div onClick={() => this.updateCommentByCommentId()}>Submit</div>
                     <div onClick={() => this.showOrHideInput()}>Cancel</div>
                 </div>
             </div>
