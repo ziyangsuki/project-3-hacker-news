@@ -14,10 +14,10 @@ app.use(cookieParser());
 const mongoose = require('mongoose');
 
 //Local
-const mongoEndpoint = 'mongodb://127.0.0.1/project_3_hacker_news';
+// const mongoEndpoint = 'mongodb://127.0.0.1/project_3_hacker_news';
 
 //Atlas
-// const mongoEndpoint = "mongodb+srv://project-3-hacker-news:project-3-hacker-news@project-3-hacker-news.altgv.mongodb.net/project-3-hacker-news?retryWrites=true&w=majority";
+const mongoEndpoint = "mongodb+srv://project-3-hacker-news:project-3-hacker-news@project-3-hacker-news.altgv.mongodb.net/project-3-hacker-news?retryWrites=true&w=majority";
 
 
 // useNewUrlParser is not required, but the old parser is deprecated

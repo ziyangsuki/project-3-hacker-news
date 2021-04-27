@@ -86,7 +86,7 @@ class HomePage extends React.Component {
               {i+1}. {post.title}
             </div>
             <div>
-              &nbsp;&nbsp;&nbsp;&nbsp;{post.content} | {post.account} | comments: {post.commentNum} | {post.createDate}
+              &nbsp;&nbsp;&nbsp;&nbsp;{post.account} | comments: {post.commentNum} | {post.createDate}
             </div>
           </td>
         </tr>
@@ -139,8 +139,8 @@ class HomePage extends React.Component {
       <div className='body'>
         <div className="center">
           <div className="nav-bar">
-              <div className='topic'>
-                  Hacker News
+              <div classNamt='topic'>
+                  Amazing Web Development Ideas
               </div>
           </div>
           <div className="tool-bar">

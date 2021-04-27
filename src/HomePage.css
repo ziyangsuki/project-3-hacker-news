@@ -74,3 +74,8 @@
 .accountName {
     text-align: right;
 }
+
+.topic {
+    font-weight: bold;
+    font-style: italic;
+}
