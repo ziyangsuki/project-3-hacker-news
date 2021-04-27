@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-// import { updateCommentByCommentId } from '../model/comment.model';
-// import {findCommentsByCommentId, deleteCommentByCommentId} from '../model/comment.model'
+import './PostAndComment.css'
 
 class Comment extends React.Component {
     constructor(props) {
@@ -11,14 +10,13 @@ class Comment extends React.Component {
         this.commentId = props.commentId;
         this.state = {
             comment: Object,
-            content:'',
+            content: '',
             updateDate: Date.now()
         };
     }
 
     // get comment by id
-    
-        getCommentById() {
+    getCommentById() {
         axios.get(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
@@ -36,7 +34,7 @@ class Comment extends React.Component {
     }
 
     deleteCommentByCommentId() {
-        this.setState({doesExist:false});
+        this.setState({ doesExist: false });
         axios.delete(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
                 console.log(response.data);
@@ -47,8 +45,8 @@ class Comment extends React.Component {
     }
 
     updateCommentByCommentId() {
-        const updates = {content: this.state.content, updateDate:this.state.updateDate}
-        this.setState({comment:this.state})
+        const updates = { content: this.state.content, updateDate: this.state.updateDate }
+        this.setState({ comment: this.state })
         axios.patch(`/home/comment/comments/${this.postId}/${this.commentId}`, updates)
             .then((response) => {
                 console.log(response.data);
@@ -68,8 +66,6 @@ class Comment extends React.Component {
     }
 
     render() {
-
-        // const { render } = this.state;
         if (this.state.doesExist === false) return null;
 
 
@@ -79,36 +75,27 @@ class Comment extends React.Component {
         if (comment.account === this.props.login.account) {
             modifyButtonSet = (
                 <div>
-                <div className="action">
-                    <button onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</button>
-                    <button onClick={() => this.deleteCommentByCommentId()}>Delete Comment</button>
-                </div>
-                <div id={comment.commentId} style={{ display: 'none' }} >
+                    <div className="action">
+                        <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</div>
+                        <div className="button" onClick={() => this.deleteCommentByCommentId()}>Delete Comment</div>
+                    </div>
+                    <div id={comment.commentId} style={{ display: 'none' }} >
 
-                     <input type="text" 
-                        onChange={(e) => this.setState({content: e.target.value})} />
-                    <button onClick={() => this.updateCommentByCommentId()}>Submit</button>
-                    <button onClick={() => this.showOrHideInput(this.commentId)}>Cancel</button>
-                </div></div>
+                        <input type="text"
+                            onChange={(e) => this.setState({ content: e.target.value })} />
+                        <div className="button" onClick={() => this.updateCommentByCommentId()}>Submit</div>
+                        <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Cancel</div>
+                    </div></div>
             )
         }
 
         return (
-            <div>
-                <div>{comment.account}</div>
-                <div>{comment.createDate}</div>
-                <div>{comment.content}</div>
-                {/* <div className="action">
-                    <button onClick={() => this.showOrHideInput(this.commentId)}>Edit Comment</button>
-                    <button onClick={() => this.deleteCommentByCommentId()}>Delete Comment</button>
+            <div className="comment-body">
+                <div className="info-grid">
+                    <div>{comment.account}</div>
+                    <div>{comment.createDate}</div>
                 </div>
-                <div id={comment.commentId} style={{ display: 'none' }} >
-
-                     <input type="text" 
-                        onChange={(e) => this.setState({content: e.target.value})} />
-                    <button onClick={() => this.updateCommentByCommentId()}>Submit</button>
-                    <button onClick={() => this.showOrHideInput(this.commentId)}>Cancel</button>
-                </div> */}
+                <div>{comment.content}</div>
                 {modifyButtonSet}
             </div>
 
@@ -119,20 +106,20 @@ class Comment extends React.Component {
 
 }
 
-let mapDispatchToProps = function(dispatch, props) {
+let mapDispatchToProps = function (dispatch, props) {
     return {
         setToken: (val) => {
-          dispatch(val);
+            dispatch(val);
         }
     }
 }
 
-let mapStateToProps = function(state, props) {
+let mapStateToProps = function (state, props) {
     return {
-      login: state.login
+        login: state.login
     }
 }
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

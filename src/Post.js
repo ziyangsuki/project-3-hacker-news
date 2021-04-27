@@ -3,10 +3,11 @@ import Comment from './Comment';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
+import './PostAndComment.css'
 const { v4: uuid } = require('uuid');
 
 class Post extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.postId = this.props.match.params.postId;
@@ -14,13 +15,11 @@ class Post extends React.Component {
             post: Object,
             comments: []
         }
-        
-        // this.post = this.findPostById();
-        // this.comments = this.findCommentsByPostId();
+
     }
 
     findPostById() {
-        
+
         axios.get(`/home/post/${this.postId}`, {})
             .then((response) => {
                 // console.log(response);
@@ -50,8 +49,8 @@ class Post extends React.Component {
 
     componentDidMount() {
         // Check if cookies has webtoken
-        if(Cookies.get('webtoken')){
-            this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+        if (Cookies.get('webtoken')) {
+            this.props.setToken({ type: "SETTOKEN", val: { webtoken: Cookies.get('webtoken'), account: Cookies.get('account') } });
         }
         this.findPostById();
         this.findCommentsByPostId();
@@ -77,31 +76,8 @@ class Post extends React.Component {
             .catch((error) => {
                 console.error(error);
             })
-            
+
     }
-
-    // deleteCommentByCommentId() {
-    //     axios.delete(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
-    //         .then((response) => {
-    //             console.log(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         })
-    // }
-
-    // updateCommentsByCommentId() {
-    //     axios.patch(`/home/comment/comments/${this.postId}/${this.commentId}`, this.state)
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             this.setState({
-    //                 comment: response.data.res_body
-    //             })
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         })
-    // }
 
     showOrHideInput(id) {
         const display = document.getElementById(id).style.display;
@@ -117,40 +93,49 @@ class Post extends React.Component {
         const comments = this.state.comments;
 
         let editButton;
-        if(this.props.login && this.props.login.account && post.account === this.props.login.account){
+        if (this.props.login && this.props.login.account && post.account === this.props.login.account) {
             editButton = (
-            <span>
-                <button onClick={()=> this.edit()}>
-                Edit
+                <span>
+                    <button onClick={() => this.edit()}>
+                        Edit
                 </button>
-            </span>
+                </span>
             )
         }
         return (
-            
-            <div>
+
+            <div className="body">
 
                 {editButton}
-                <div><h1>{post.title}</h1></div>
-                <div>Account: {post.account}</div>
-                <div>CreateDate: {post.createDate}</div>
-                <div>Content: {post.content}</div>
-
-
-                <div className="action">
-                    <div onClick={() => this.showOrHideInput('addComment')}>Add Comment</div>
+                <div className="post-outline">
+                    <div><h1>{post.title}</h1></div>
+                    <div className="info-grid">
+                        <div>Account: {post.account}</div>
+                        <div>CreateDate: {post.createDate}</div>
+                    </div>
+                    <div className="post-content-box">
+                        <div className="post-content">{post.content}</div>
+                    </div>
                 </div>
+
+                <div className="button" onClick={() => this.showOrHideInput('addComment')}>Add Comment</div>
+
                 <div id="addComment" style={{ display: 'none' }} >
-                    <input type="text" 
-                        onChange={(e) => this.setState({commentToAdd: e.target.value})} />
-                    <button onClick={() => this.addComment()}>Submit</button>
-                    <button onClick={() => this.showOrHideInput('addComment')}>Cancel</button>
+                    <div className="flex-box">
+                        <input type="text"
+                            onChange={(e) => this.setState({ commentToAdd: e.target.value })} />
+                    </div>
+                    <div className="action-buttons-grid">
+                        <div className="button" onClick={() => this.addComment()}>Submit</div>
+                        <div className="button" onClick={() => this.showOrHideInput('addComment')}>Cancel</div>
+                    </div>
                 </div>
-
+                <div className="comment-outline">
                 {comments?.map((comment) => (
                     <Comment postId={this.postId} commentId={comment.commentId}></Comment>
                 ))}
-                
+                </div>
+
             </div>
 
         )
@@ -158,20 +143,20 @@ class Post extends React.Component {
     }
 }
 
-let mapDispatchToProps = function(dispatch, props) {
+let mapDispatchToProps = function (dispatch, props) {
     return {
         setToken: (val) => {
-          dispatch(val);
+            dispatch(val);
         }
     }
 }
 
-let mapStateToProps = function(state, props) {
+let mapStateToProps = function (state, props) {
     return {
         login: state.login
     }
 }
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
