@@ -54,28 +54,37 @@ class PostPage extends React.Component {
         this.findCommentsByPostId();
     }
 
-    updateCommentNum(num) {
-        axios.patch(`/home/post/${this.postId}`, {commentNum:num})
-        .then((response) => {
-            console.log(response.res_body);
-        })
-        .catch((error) => {
-            console.error(error);
-        })
-    }
+    // updateCommentNum(postId, num) {
+        // axios.patch(`/home/post/${this.postId}`, {commentNum:num})
+        // axios.patch(`/home/post/${postId}`, { commentNum: num })
+        //     .then((response) => {
+        //         console.log(response.res_body);
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     })
+    // }
 
-    getCommentNum() {
+    getCommentNum(postId) {
         let comments;
         let num;
-        axios.get(`/home/comment/comments/${this.postId}`, )
-        .then((response) => {
-            comments = response.data.res_body
-            num = comments.length;
-            this.updateCommentNum(num);
-        })
-        .catch((error) => {
-            console.error(error);
-        })
+        // axios.get(`/home/comment/comments/${this.postId}`, )
+        axios.get(`/home/comment/comments/${postId}`,)
+            .then((response) => {
+                comments = response.data.res_body
+                num = comments.length;
+                // this.updateCommentNum(postId, num);
+                axios.patch(`/home/post/${postId}`, { commentNum: num })
+                    .then((response) => {
+                        console.log(response.res_body);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+            })
+            .catch((error) => {
+                console.error(error);
+            })
     }
 
     addComment() {
@@ -97,8 +106,7 @@ class PostPage extends React.Component {
             .catch((error) => {
                 console.error(error);
             })
-        this.getCommentNum();
-
+        this.getCommentNum(this.postId);
     }
 
     showOrHideInput(id) {
@@ -106,14 +114,13 @@ class PostPage extends React.Component {
         document.getElementById(id).style.display = display === 'none' ? 'inline' : 'none';
     }
 
-
     edit() {
         this.props.history.push(`/home/post/edit/${this.postId}`)
     }
 
-    back(){
+    back() {
         this.props.history.push('/');
-      }
+    }
 
     render() {
         const post = this.state.post;
@@ -132,8 +139,8 @@ class PostPage extends React.Component {
         return (
 
             <div className="body">
-                <div className="button" onClick={()=>this.back()}>Back</div>
-                
+                <div className="button" onClick={() => this.back()}>Back</div>
+
                 <div className="post-outline">
                     <div><h1>{post.title}</h1></div>
                     {editButton}
@@ -159,9 +166,9 @@ class PostPage extends React.Component {
                     </div>
                 </div>
                 <div className="comment-outline">
-                {comments?.map((comment) => (
-                    <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId}></Comment>
-                ))}
+                    {comments?.map((comment) => (
+                        <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId} func={this.getCommentNum}></Comment>
+                    ))}
                 </div>
 
             </div>
