@@ -13,7 +13,8 @@ function findAllPosts(){
 }
 
 function findPostById(id) {
-    return PostModel.findOne({postId: id});
+    const post = PostModel.findById(id);
+    return post;
 }
 
 //updateDoc is an object

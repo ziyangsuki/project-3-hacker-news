@@ -1,57 +1,72 @@
 import React from 'react';
-// import {findPostById} from '../model/comment.model';
-import {Comment} from './Comment';
+import Comment from './Comment';
 import axios from 'axios';
-// import {findCommentsByPostId} from '../model/comment.model'
 
 
 export default class Post extends React.Component {
+    
     constructor(props) {
         super(props);
-        this.id = props.postID;
+        this.postId = this.props.match.params.postId;
+        this.state = {
+            post: Object,
+            comments: []
+        }
         
+        // this.post = this.findPostById();
+        // this.comments = this.findCommentsByPostId();
+    }
+
+    // findPostById() {
+        componentDidMount() {
+        axios.get(`/home/post/${this.postId}`, {})
+            .then((response) => {
+                console.log(response);
+                this.setState({
+                    post: response.data.res_body
+                })
+                console.log(this.state);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
     }
 
     findCommentsByPostId() {
-        axios.get(`home/comment/comments/${this.postId}`, {})
+        
+        axios.get('/home/comment/comments/'+this.postId, {})
             .then((response) => {
-                console.log(response.data);
                 this.setState({
-                    posts: response.data
+                    comments: response.data.res_body
                 })
             })
             .catch((error) => {
                 console.error(error);
             })
+        
     }
 
-    findPostById() {
-        axios.get(`home/post/${this.postId}`, {})
-            .then((response) => {
-                console.log(response.data);
-                this.setState({
-                    posts: response.data
-                })
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-    }
+
 
     render() {
-        const post = this.findPostById();
-        const comments = this.findCommentsByPostId();
-
+        //  this.findPostById();
+        // const comments = this.findCommentsByPostId();
+        // console.log(this.state.post);
+        const post = this.state.post;
+        const comments = this.state.comments;
         return (
             <div>
-                <div>{post.title}</div>
-                <div>{post.account}</div>
-                <div>{post.createDate}</div>
-                <div>{post.content}</div>
+                {/* <button onClick={()=>this.findPostById()}>click</button> */}
+                {/* <div>{this.post}</div> */}
+                <div><h1>{post.title}</h1></div>
+                <div>Account: {post.account}</div>
+                <div>CreateDate: {post.createDate}</div>
+                <div>Content: {post.content}</div>
 
                 {comments?.map((comment) => (
                     <Comment postId={this.id} commentId={comment.commentId}></Comment>
                 ))}
+                
             </div>
 
         )

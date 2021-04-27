@@ -25,6 +25,16 @@ router.post('/post', function(req,res) {
     })
 })
 
+router.get('/post/:postId', function(req,res) {
+    const postId = req.params.postId;
+    return PostModel.findPostById(postId)
+    .then(response => {
+        res.status(200).send({res_msg:"Success", res_body: response});
+    }, (error) => {
+        res.status(500).send({res_msg:"Error", res_body: error});
+    })
+})
+
 router.put('/post/:postId', function(req,res) {
     const postId = req.params.postId;
     const updateDoc = req.params.updateDoc;

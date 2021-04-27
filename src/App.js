@@ -5,6 +5,7 @@ import SignUpPage from './SignUpPage';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import CreatePostPage from './CreatePostPage';
+import Post from './Post';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
                 <Route exact path={"/login"} component={LoginPage}/>
                 <Route exact path={"/register"} component={SignUpPage}/>
                 <Route exact path={"/createPost"} component={CreatePostPage}/>
+                <Route exact path={"/home/post/:postId"} component={Post}/>
                 <Route render={() => <h1>Page not found!</h1>} />
             </Switch>
         </Router>

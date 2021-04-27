@@ -37,6 +37,10 @@ class HomePage extends React.Component {
     this.props.history.push('/editPost')
   }
 
+  linkToPost(postId) {
+    this.props.history.push(`/home/post/${postId}`);
+  }
+
   delete(postId){
     axios.delete('/home/post/' + postId, {})
       .then((response) => {
@@ -78,7 +82,7 @@ class HomePage extends React.Component {
       renderedPosts.push(
         <tr key={i}>
           <td>
-            <div>
+            <div onClick={() => this.linkToPost(post._id)}>
               {i+1}. {post.title}
             </div>
             <div>
