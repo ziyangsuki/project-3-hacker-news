@@ -96,19 +96,19 @@ class Post extends React.Component {
         if (this.props.login && this.props.login.account && post.account === this.props.login.account) {
             editButton = (
                 <span>
-                    <button onClick={() => this.edit()}>
+                    <div className="button" onClick={() => this.edit()}>
                         Edit
-                </button>
+                </div>
                 </span>
             )
         }
         return (
 
             <div className="body">
-
-                {editButton}
+                
                 <div className="post-outline">
                     <div><h1>{post.title}</h1></div>
+                    {editButton}
                     <div className="info-grid">
                         <div>Account: {post.account}</div>
                         <div>CreateDate: {post.createDate}</div>
