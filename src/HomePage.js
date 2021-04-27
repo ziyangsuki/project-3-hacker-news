@@ -95,10 +95,10 @@ class HomePage extends React.Component {
       if(post.account === this.props.login.account){
         modifyButton = (
           <span>
-            <button onClick={()=> this.edit(post._id)}>
+            <button className="small-button" onClick={()=> this.edit(post._id)}>
               Edit
             </button>
-            <button onClick={()=> this.delete(post._id)}>
+            <button className="small-button" onClick={()=> this.delete(post._id)}>
               Delete
             </button>
           </span>
@@ -113,10 +113,10 @@ class HomePage extends React.Component {
     if(this.props.login.webtoken === ""){
       loginButton = (
         <div>
-          <button onClick={()=> this.login()}>
+          <button className="button" onClick={()=> this.login()}>
             Login
           </button>
-          <button onClick={()=> this.register()}>
+          <button className="button" onClick={()=> this.register()}>
             Register
           </button>
         </div>
@@ -125,10 +125,10 @@ class HomePage extends React.Component {
       console.log(this.props.login)
       loginButton = (
         <div>
-          <button onClick={()=> this.logout()}>
+          <button className="button" onClick={()=> this.logout()}>
             Logout
           </button>
-          <button onClick={()=> this.createPost()}>
+          <button className="button" onClick={()=> this.createPost()}>
             Create Post
           </button>
         </div>
@@ -136,28 +136,30 @@ class HomePage extends React.Component {
     }
 
     return (
-      <div className="center">
-        <div className="nav-bar">
-            <div>
-                Hacker News
-            </div>
-        </div>
-        <div className="tool-bar">
-            <div></div>
-            <div>
-              <span>
-                {this.props.login.account}
-              </span>
-              &nbsp;&nbsp;&nbsp;
-              {loginButton}
-            </div>
-        </div>
-        <div className="content">
-          <table className="post-content">
-            <tbody>
-              {renderedPosts}
-            </tbody>
-          </table>
+      <div className='body'>
+        <div className="center">
+          <div className="nav-bar">
+              <div className='topic'>
+                  Hacker News
+              </div>
+          </div>
+          <div className="tool-bar">
+              <div></div>
+              <div>
+                <span className='accountName'>
+                  {this.props.login.account}
+                </span>
+                &nbsp;&nbsp;&nbsp;
+                {loginButton}
+              </div>
+          </div>
+          <div className="content">
+            <table className="post-content">
+              <tbody>
+                {renderedPosts}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     )
