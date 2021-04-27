@@ -108,6 +108,7 @@ class Comment extends React.Component {
                     <div id={comment.commentId} style={{ display: 'none' }} >
 
                         <input type="text"
+                        // <input type="text" value={comment.content}
                             onChange={(e) => this.setState({ content: e.target.value })} />
                         <div className="button" onClick={() => this.updateCommentByCommentId()}>Submit</div>
                         <div className="button" onClick={() => this.showOrHideInput(this.commentId)}>Cancel</div>

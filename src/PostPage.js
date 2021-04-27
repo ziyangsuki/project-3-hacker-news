@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import './PostAndComment.css'
 const { v4: uuid } = require('uuid');
 
-class Post extends React.Component {
+class PostPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -188,4 +188,4 @@ let mapStateToProps = function (state, props) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Post);
+)(PostPage);
