@@ -27,9 +27,15 @@ function deletePostById(postId){
     return PostModel.findByIdAndDelete(postId);
 }
 
+function updatePostCommentNum(postId, NewcommentNum) {
+    return PostModel.findByIdAndUpdate({_id: postId},
+        NewcommentNum)
+}
+
 
 exports.addPost = addPost;
 exports.findAllPosts = findAllPosts;
 exports.editPost = editPost;
 exports.deletePostById = deletePostById;
 exports.findPostById = findPostById;
+exports.updatePostCommentNum = updatePostCommentNum;

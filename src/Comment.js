@@ -19,7 +19,7 @@ class Comment extends React.Component {
     getCommentById() {
         axios.get(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.setState({
                     comment: response.data.res_body
                 })
@@ -33,15 +33,41 @@ class Comment extends React.Component {
         this.getCommentById();
     }
 
+    updateCommentNum(num) {
+        axios.patch(`/home/post/${this.postId}`, {commentNum:num})
+        .then((response) => {
+            console.log(response.res_body);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    getCommentNum() {
+        let comments;
+        let num;
+        axios.get(`/home/comment/comments/${this.postId}`, )
+        .then((response) => {
+            comments = response.data.res_body
+            num = comments.length;
+            this.updateCommentNum(num);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
     deleteCommentByCommentId() {
         this.setState({ doesExist: false });
         axios.delete(`/home/comment/comments/${this.postId}/${this.commentId}`, {})
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
+                console.log("Comment deleted")
             })
             .catch((error) => {
                 console.error(error);
             })
+        this.getCommentNum();
     }
 
     updateCommentByCommentId() {
@@ -49,7 +75,7 @@ class Comment extends React.Component {
         this.setState({ comment: this.state })
         axios.patch(`/home/comment/comments/${this.postId}/${this.commentId}`, updates)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.setState({
                     comment: response.data.res_body
                 })

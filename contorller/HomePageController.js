@@ -56,6 +56,16 @@ router.delete('/post/:postId', function(req,res) {
     })
 })
 
+router.patch('/post/:postId', function(req, res) {
+    console.log("what")
+    return PostModel.updatePostCommentNum(req.params.postId, req.body)
+    .then(response => {
+        res.status(200).send({res_msg:"Success", res_body: response});
+    }, (error) => {
+        res.status(500).send({res_msg:"Error", res_body: error});
+    })
+})
+
 /*Comments*/
 
 router.get('/comment/comments/:postId', function(req, res) {
@@ -103,6 +113,13 @@ router.patch('/comment/comments/:postId/:commentId', function(req, res) {
     })
 })
 
-module.exports = router;
+router.get('/comment/comments/:postId/num', function(req, res) {
+    return CommentModel.countCommentByPostID(req.params.postId)
+    .then(response => {
+        res.status(200).send({res_msg:"Success", res_body: response});
+    }, (error) => {
+        res.status(500).send({res_msg:"Error", res_body: error});
+    })
+})
 
 module.exports = router;

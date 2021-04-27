@@ -19,7 +19,6 @@ class Post extends React.Component {
     }
 
     findPostById() {
-
         axios.get(`/home/post/${this.postId}`, {})
             .then((response) => {
                 // console.log(response);
@@ -44,7 +43,6 @@ class Post extends React.Component {
             .catch((error) => {
                 console.error(error);
             })
-        console.log(this.state)
     }
 
     componentDidMount() {
@@ -56,6 +54,29 @@ class Post extends React.Component {
         this.findCommentsByPostId();
     }
 
+    updateCommentNum(num) {
+        axios.patch(`/home/post/${this.postId}`, {commentNum:num})
+        .then((response) => {
+            console.log(response.res_body);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    getCommentNum() {
+        let comments;
+        let num;
+        axios.get(`/home/comment/comments/${this.postId}`, )
+        .then((response) => {
+            comments = response.data.res_body
+            num = comments.length;
+            this.updateCommentNum(num);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
     addComment() {
         this.showOrHideInput("addComment");
@@ -65,10 +86,10 @@ class Post extends React.Component {
             account: this.props.login.account,
             commentId: uuid()
         }
-        console.log(newComment.commentId);
+        console.log(newComment.postId);
         axios.post(`/home/comment/comments/${this.postId}`, newComment)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.setState({
                     comments: this.state.comments.concat(response.data.res_body)
                 })
@@ -76,6 +97,7 @@ class Post extends React.Component {
             .catch((error) => {
                 console.error(error);
             })
+        this.getCommentNum();
 
     }
 
@@ -84,6 +106,7 @@ class Post extends React.Component {
         document.getElementById(id).style.display = display === 'none' ? 'inline' : 'none';
     }
 
+
     edit() {
         this.props.history.push(`/home/post/edit/${this.postId}`)
     }
@@ -91,7 +114,7 @@ class Post extends React.Component {
     back(){
         this.props.history.push('/');
       }
-      
+
     render() {
         const post = this.state.post;
         const comments = this.state.comments;
