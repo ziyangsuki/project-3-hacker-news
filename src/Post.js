@@ -88,6 +88,10 @@ class Post extends React.Component {
         this.props.history.push(`/home/post/edit/${this.postId}`)
     }
 
+    back(){
+        this.props.history.push('/');
+      }
+      
     render() {
         const post = this.state.post;
         const comments = this.state.comments;
@@ -105,6 +109,7 @@ class Post extends React.Component {
         return (
 
             <div className="body">
+                <div className="button" onClick={()=>this.back()}>Back</div>
                 
                 <div className="post-outline">
                     <div><h1>{post.title}</h1></div>
