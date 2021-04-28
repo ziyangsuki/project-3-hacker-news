@@ -1,0 +1,145 @@
+/* Common styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    background-color: #FFE7D0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+h1 {
+    padding: 15px;
+    color:#953920;
+    /* border: #f1ba7b 2pt solid; */
+    border-radius: 30px;
+    width: 100%;
+}
+
+.button {
+    background-color: #FC8E20;
+    color: white;
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.flex-box {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    align-self: center;
+}
+
+.button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
+.info-grid {
+    border-bottom: grey 1pt solid;
+    display: grid;
+    width: 90%;
+    grid-template-columns: 1fr 1fr;
+    padding: 15px;
+    text-align: center;
+}
+
+.info {
+    color:rgb(87, 85, 85);
+}
+
+.action-buttons-grid {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Post */
+
+.post-outline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    border:rgb(114, 111, 111) 1pt solid;
+    margin: 20px;
+    border-radius: 30px;
+    padding: 20px;
+}
+
+.post-content-box {
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.post-content {
+    word-wrap:break-word;
+    line-height:30px;
+}
+
+.comment-outline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    border:rgb(173, 172, 172) 1pt solid;
+    margin: 20px;
+    border-radius: 30px;
+    padding: 20px;
+}
+
+/* Comment */
+
+.comment-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: rgb(163, 163, 162) .5pt solid;
+}
+
+.comment-content {
+    padding: 10px;
+    width: 80%;
+    word-wrap:break-word;
+    line-height: 30px;
+}
+
+#comment-info {
+    border-bottom: none;
+}
+
+
+@media screen and (max-width: 850px) {
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .info {
+        font-size: 10px;
+    }
+    
+}

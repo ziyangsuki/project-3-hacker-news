@@ -1,0 +1,39 @@
+.login-content {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFE7D0;
+    /* justify-content: flex-start; */
+    align-items: center;
+    flex-direction: column;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.warning{
+    color:red;
+}
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 20%;
+}
+
+.button {
+    background-color: #FC8E20;
+    color: white;
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.button:hover {
+    color: #323232;
+    cursor: pointer;
+}

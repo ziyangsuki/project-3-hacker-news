@@ -1,0 +1,108 @@
+.center {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-bar {
+    width: 60%;
+    background-color: rgb(243, 111, 10);
+    display: flex;
+    justify-content: center;
+}
+
+.tool-bar {
+    width: 60%;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+}
+
+.accountName {
+    background-color: rgb(255, 255, 255, 0.5);
+    color:#953920;
+    text-align: center;
+    border-radius: 20px;
+    line-height: 30px;
+    margin-top: 5px;
+}
+
+.content{
+    width: 60%;
+}
+
+.post-content{
+    width: 100%;
+}
+
+.body {
+    background-color: #FFE7D0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-width: 100vw; 
+    min-height: 100vh;
+}
+
+.home-buttons-box {
+    display: flex;
+    justify-content: center;
+}
+
+.home-button {
+    background-color: #FC8E20;
+    color: white;
+    height: 35px;
+    width: 75px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.home-button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
+.small-button {
+    background-color: #f09d0d;
+    color: white;
+    height: 20px;
+    width: 50px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 15px;
+    font-weight: normal;
+    margin: 10px;
+}
+
+.small-button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
+.topic {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.post-title:hover {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 850px) {
+
+    .tool-bar {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+}

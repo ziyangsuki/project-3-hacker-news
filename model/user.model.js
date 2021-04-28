@@ -12,6 +12,10 @@ function findAllUsers(){
     return UserModel.find().exec();
 }
 
+function findUser(account) {
+    return UserModel.findOne({account: account}).exec();
+}
 
 exports.addUser = addUser;
 exports.findAllUsers = findAllUsers;
+exports.findUser = findUser;

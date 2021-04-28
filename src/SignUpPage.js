@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import './LoginPage.css';
+import './SignUpPage.css';
 
 
-class LoginPage extends React.Component {
+class SighUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,11 @@ class LoginPage extends React.Component {
     }
   }
 
-  login() {
+  componentDidMount() {
+
+  }
+
+  signUp() {
     if (!this.state.account || !this.state.password) {
       this.setState({
         error: "Please fill the Account and Password."
@@ -23,20 +27,18 @@ class LoginPage extends React.Component {
     }
 
     //1. Assemble user data
-    let user = {
+    let newUser = {
       account: this.state.account,
       password: this.state.password
     };
 
     //2. Call API, adduUser
-    axios.post('/login/login', { user: user })
+    axios.post('/login/register', { user: newUser })
       .then((response) => {
         this.props.history.push('/');
       })
       .catch((error) => {
-        this.setState({
-          error: error.response.data.res_body
-        })
+        console.error(error);
       })
   }
 
@@ -46,7 +48,7 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="login-content">
+      <div className="signup-content">
         <div className="warning">
           {this.state.error}
         </div>
@@ -72,8 +74,8 @@ class LoginPage extends React.Component {
             </tr>
           </tbody>
         </table>
-          <button className='button' onClick={() => this.login()}>Login</button>
-          <button className='button' onClick={() => this.back()}>Back</button>
+        <button className='button' onClick={() => this.signUp()}>Sign Up</button>
+        <button className='button' onClick={() => this.back()}>Back</button>
       </div>
     )
   }
@@ -92,4 +94,4 @@ let mapStateToProps = function (state, props) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginPage);
+)(SighUpPage);

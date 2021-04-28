@@ -1,42 +1,83 @@
 import axios from 'axios';
 import React from 'react';
+import './HomePage.css';
+import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
 
 class HomePage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       posts: []
     }
   }
 
-  componentDidMount(){
-    
+  componentDidMount() {
+    // Check if cookies has webtoken
+    if (Cookies.get('webtoken')) {
+      this.props.setToken({ type: "SETTOKEN", val: { webtoken: Cookies.get('webtoken'), account: Cookies.get('account') } });
+    }
+    // Get all posts
+    axios.get('/home/post/all', {})
+      .then((response) => {
+        this.setState({
+          posts: response.data.res_body
+        })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  createPost(){
+  createPost() {
+    this.props.history.push('/home/post/new')
+  }
 
-    if(!this.state.account || !this.state.password){
-      return alert("Please fill the Account and Password.");
-    }
+  edit(postId) {
+    this.props.history.push(`/home/post/edit/${postId}`)
+  }
 
-    //1. Assemble user data
-    let newUser = {
-      account:this.state.account,
-      password:this.state.password
-    };
+  linkToPost(postId) {
+    this.props.history.push(`/home/post/${postId}`);
+  }
 
-    //2. Call API, adduUser
-    axios.post('/addUser', {user: newUser})
+  deleteAllComments(postId) {
+    axios.delete('/home/comment/comments/' + postId, {})
       .then((response) => {
-        console.log(response.data);
-        //3. Call API, findAllUsers again
-        return axios.get('/findAllUsers')
+        console.log('successfully deleted comments of ' + postId);
       })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  delete(postId) {
+    axios.delete('/home/post/' + postId, {})
       .then((response) => {
-        console.log(response.data)
+        console.log('successfully deleted ' + postId);
+        let updatedposts = this.state.posts.filter((p) => p._id !== postId);
         this.setState({
-          users: response.data.res_body
-        })
+          posts: updatedposts
+        });
+        this.deleteAllComments(postId);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  register() {
+    this.props.history.push('/register')
+  }
+
+  login() {
+    this.props.history.push('/login')
+  }
+
+  logout() {
+    axios.post('/login//logout', {})
+      .then((response) => {
+        this.props.setToken({ type: "CLEARTOKEN" });
       })
       .catch((error) => {
         console.error(error);
@@ -47,33 +88,110 @@ class HomePage extends React.Component {
 
     //Assemble render posts
     const renderedPosts = [];
-    for(let i = 0; i < this.state.posts.length; i++){
+    for (let i = 0; i < this.state.posts.length; i++) {
       const post = this.state.posts[i];
       renderedPosts.push(
-        <div key={i}>
-          <span>{i+1}.</span><span>{post.title}</span><span>{post.date}</span><span>{post.numOfComments}</span>
+        <tr key={i}>
+          <td>
+            <div onClick={() => this.linkToPost(post._id)}>
+              <b className="post-title">{i + 1}. {post.title}</b>
+            </div>
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;{post.account} | comments: {post.commentNum} | {post.createDate}
+            </div>
+          </td>
+        </tr>
+      )
+      let modifyButton;
+      if (post.account === this.props.login.account) {
+        modifyButton = (
+          <span>
+            <button className="small-button" onClick={() => this.edit(post._id)}>
+              Edit
+            </button>
+            <button className="small-button" onClick={() => this.delete(post._id)}>
+              Delete
+            </button>
+          </span>
+        )
+        renderedPosts.push(modifyButton)
+      }
+
+    }
+
+
+    let loginButton;
+    if (this.props.login.webtoken === "") {
+      loginButton = (
+        <div className="home-buttons-box">
+          <button className="home-button" onClick={() => this.login()}>
+            Login
+          </button>
+          <button className="home-button" onClick={() => this.register()}>
+            Register
+          </button>
+        </div>
+      )
+    } else {
+      console.log(this.props.login)
+      loginButton = (
+        <div className="home-buttons-box">
+          <button className="button" onClick={() => this.logout()}>
+            Logout
+          </button>
+          <button className="button" onClick={() => this.createPost()}>
+            Create Post
+          </button>
         </div>
       )
     }
 
     return (
-      <div>
-        <div className="nav-bar">
-            <div>
-                Title
+      <div className='body'>
+        <div className="center">
+          <div className="nav-bar">
+            <div className='topic'>
+              Amazing  Web  Development  Ideas
+              </div>
+          </div>
+          <div className="tool-bar">
+            <div className="left-space"></div>
+            <div className="account">
+              <div className='accountName'>
+                <b>{this.props.login.account}</b>
+              </div>
+                {loginButton}
             </div>
-            <div>
-                <button onClick={()=> this.createPost()}>
-                    Post
-                </button>
-            </div>
-        </div>
-        <div className="content">
-            {renderedPosts}
+          </div>
+          
+          <div className="content">
+            <table className="post-content">
+              <tbody>
+                {renderedPosts}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default HomePage;
+let mapDispatchToProps = function (dispatch, props) {
+  return {
+    setToken: (val) => {
+      dispatch(val);
+    }
+  }
+}
+
+let mapStateToProps = function (state, props) {
+  return {
+    login: state.login
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
