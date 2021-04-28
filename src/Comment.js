@@ -93,8 +93,8 @@ class Comment extends React.Component {
         return (
             <div className="comment-body">
                 <div className="info-grid" id="comment-info">
-                    <div>Account: {comment.account}</div>
-                    <div>Create Date: {comment.createDate}</div>
+                    <div className="info">Account: {comment.account}</div>
+                    <div className="info">Create Date: {comment.createDate}</div>
                 </div>
                 <div className="comment-content"><span>{comment.content}</span></div>
                 {modifyButtonSet}

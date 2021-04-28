@@ -98,3 +98,11 @@
 .post-title:hover {
     cursor: pointer;
 }
+
+@media screen and (max-width: 850px) {
+
+    .tool-bar {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+}
