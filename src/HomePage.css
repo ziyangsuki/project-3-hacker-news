@@ -49,6 +49,11 @@
     margin: 20px;
 }
 
+.home-button:hover {
+    color: #323232;
+    cursor: pointer;
+}
+
 .button:hover {
     color: #323232;
     cursor: pointer;
