@@ -79,3 +79,7 @@
     font-weight: bold;
     font-style: italic;
 }
+
+.post-title:hover {
+    cursor: pointer;
+}

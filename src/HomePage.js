@@ -94,7 +94,7 @@ class HomePage extends React.Component {
         <tr key={i}>
           <td>
             <div onClick={() => this.linkToPost(post._id)}>
-              {i+1}. {post.title}
+              <b className="post-title">{i+1}. {post.title}</b>
             </div>
             <div>
               &nbsp;&nbsp;&nbsp;&nbsp;{post.account} | comments: {post.commentNum} | {post.createDate}
