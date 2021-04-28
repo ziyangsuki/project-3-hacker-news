@@ -72,10 +72,8 @@ class LoginPage extends React.Component {
             </tr>
           </tbody>
         </table>
-        <div className="buttons-grid">
           <button className='button' onClick={() => this.login()}>Login</button>
           <button className='button' onClick={() => this.back()}>Back</button>
-        </div>
       </div>
     )
   }

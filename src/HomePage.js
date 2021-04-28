@@ -5,35 +5,35 @@ import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 
 class HomePage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       posts: []
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // Check if cookies has webtoken
-    if(Cookies.get('webtoken')){
-      this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+    if (Cookies.get('webtoken')) {
+      this.props.setToken({ type: "SETTOKEN", val: { webtoken: Cookies.get('webtoken'), account: Cookies.get('account') } });
     }
     // Get all posts
     axios.get('/home/post/all', {})
-    .then((response) => {
-      this.setState({
-        posts:response.data.res_body
+      .then((response) => {
+        this.setState({
+          posts: response.data.res_body
+        })
       })
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  createPost(){
+  createPost() {
     this.props.history.push('/home/post/new')
   }
 
-  edit(postId){
+  edit(postId) {
     this.props.history.push(`/home/post/edit/${postId}`)
   }
 
@@ -51,7 +51,7 @@ class HomePage extends React.Component {
       });
   }
 
-  delete(postId){
+  delete(postId) {
     axios.delete('/home/post/' + postId, {})
       .then((response) => {
         console.log('successfully deleted ' + postId);
@@ -66,18 +66,18 @@ class HomePage extends React.Component {
       });
   }
 
-  register(){
+  register() {
     this.props.history.push('/register')
   }
 
-  login(){
+  login() {
     this.props.history.push('/login')
   }
 
-  logout(){
+  logout() {
     axios.post('/login//logout', {})
       .then((response) => {
-        this.props.setToken({type: "CLEARTOKEN"});
+        this.props.setToken({ type: "CLEARTOKEN" });
       })
       .catch((error) => {
         console.error(error);
@@ -88,13 +88,13 @@ class HomePage extends React.Component {
 
     //Assemble render posts
     const renderedPosts = [];
-    for(let i = 0; i < this.state.posts.length; i++){
+    for (let i = 0; i < this.state.posts.length; i++) {
       const post = this.state.posts[i];
       renderedPosts.push(
         <tr key={i}>
           <td>
             <div onClick={() => this.linkToPost(post._id)}>
-              <b className="post-title">{i+1}. {post.title}</b>
+              <b className="post-title">{i + 1}. {post.title}</b>
             </div>
             <div>
               &nbsp;&nbsp;&nbsp;&nbsp;{post.account} | comments: {post.commentNum} | {post.createDate}
@@ -103,13 +103,13 @@ class HomePage extends React.Component {
         </tr>
       )
       let modifyButton;
-      if(post.account === this.props.login.account){
+      if (post.account === this.props.login.account) {
         modifyButton = (
           <span>
-            <button className="small-button" onClick={()=> this.edit(post._id)}>
+            <button className="small-button" onClick={() => this.edit(post._id)}>
               Edit
             </button>
-            <button className="small-button" onClick={()=> this.delete(post._id)}>
+            <button className="small-button" onClick={() => this.delete(post._id)}>
               Delete
             </button>
           </span>
@@ -118,28 +118,28 @@ class HomePage extends React.Component {
       }
 
     }
-    
+
 
     let loginButton;
-    if(this.props.login.webtoken === ""){
+    if (this.props.login.webtoken === "") {
       loginButton = (
         <div>
-          <button className="home-button" onClick={()=> this.login()}>
+          <button className="home-button" onClick={() => this.login()}>
             Login
           </button>
-          <button className="home-button" onClick={()=> this.register()}>
+          <button className="home-button" onClick={() => this.register()}>
             Register
           </button>
         </div>
       )
-    }else{
+    } else {
       console.log(this.props.login)
       loginButton = (
         <div>
-          <button className="button" onClick={()=> this.logout()}>
+          <button className="button" onClick={() => this.logout()}>
             Logout
           </button>
-          <button className="button" onClick={()=> this.createPost()}>
+          <button className="button" onClick={() => this.createPost()}>
             Create Post
           </button>
         </div>
@@ -150,19 +150,19 @@ class HomePage extends React.Component {
       <div className='body'>
         <div className="center">
           <div className="nav-bar">
-              <div className='topic'>
-                  Amazing  Web  Development  Ideas
+            <div className='topic'>
+              Amazing  Web  Development  Ideas
               </div>
           </div>
           <div className="tool-bar">
-              <div></div>
-              <div>
-                <span className='accountName'>
-                  {this.props.login.account}
-                </span>
-                &nbsp;&nbsp;&nbsp;
+            <div></div>
+            <div className="account">
+              <span className='accountName'>
+                {this.props.login.account}
+              </span>
+                {/* &nbsp;&nbsp;&nbsp; */}
                 {loginButton}
-              </div>
+            </div>
           </div>
           <div className="content">
             <table className="post-content">
@@ -177,21 +177,21 @@ class HomePage extends React.Component {
   }
 }
 
-let mapDispatchToProps = function(dispatch, props) {
-    return {
-        setToken: (val) => {
-          dispatch(val);
-        }
+let mapDispatchToProps = function (dispatch, props) {
+  return {
+    setToken: (val) => {
+      dispatch(val);
     }
+  }
 }
-  
-let mapStateToProps = function(state, props) {
-    return {
-      login: state.login
-    }
+
+let mapStateToProps = function (state, props) {
+  return {
+    login: state.login
+  }
 }
-  
+
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(HomePage);
