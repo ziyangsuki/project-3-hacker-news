@@ -10,12 +10,15 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    /* width: 100vw; */
     min-height: 100vh;
 }
 
 h1 {
     padding: 15px;
+    color:#953920;
+    /* border: #f1ba7b 2pt solid; */
+    border-radius: 30px;
+    width: 100%;
 }
 
 .button {
@@ -53,6 +56,10 @@ textarea {
     grid-template-columns: 1fr 1fr;
     padding: 15px;
     text-align: center;
+}
+
+.info {
+    color:#d67f1b
 }
 
 .action-buttons-grid {

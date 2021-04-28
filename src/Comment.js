@@ -71,7 +71,7 @@ class Comment extends React.Component {
         const comment = this.state.comment;
 
         let modifyButtonSet;
-        if (comment.account === this.props.login.account) {
+        if (comment.account === this.props.login.account && comment.account !== "Guest") {
             modifyButtonSet = (
                 <div>
                     <div className="action-buttons-grid">
