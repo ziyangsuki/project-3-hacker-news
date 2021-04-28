@@ -41,6 +41,16 @@ class HomePage extends React.Component {
     this.props.history.push(`/home/post/${postId}`);
   }
 
+  deleteAllComments(postId) {
+    axios.delete('/home/comment/comments/' + postId, {})
+      .then((response) => {
+        console.log('successfully deleted comments of ' + postId);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   delete(postId){
     axios.delete('/home/post/' + postId, {})
       .then((response) => {
@@ -49,6 +59,7 @@ class HomePage extends React.Component {
         this.setState({
           posts: updatedposts
         });
+        this.deleteAllComments(postId);
       })
       .catch((error) => {
         console.error(error);

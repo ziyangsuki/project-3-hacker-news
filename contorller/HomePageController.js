@@ -104,6 +104,15 @@ router.delete('/comment/comments/:postId/:commentId', function(req, res) {
     })
 })
 
+router.delete('/comment/comments/:postId', function(req, res) {
+    return CommentModel.deleteAllCommentsByPostId(req.params.postId)
+    .then(response => {
+        res.status(200).send({res_msg:"Success", res_body: response});
+    }, (error) => {
+        res.status(500).send({res_msg:"Error", res_body: error});
+    })
+})
+
 router.patch('/comment/comments/:postId/:commentId', function(req, res) {
     return CommentModel.updateCommentByCommentId(req.params.commentId, req.body)
     .then(response => {

@@ -15,7 +15,6 @@ class PostPage extends React.Component {
             post: Object,
             comments: []
         }
-
     }
 
     findPostById() {
@@ -30,7 +29,6 @@ class PostPage extends React.Component {
                 console.error(error);
             })
     }
-
 
     findCommentsByPostId() {
         // find comments
@@ -54,26 +52,13 @@ class PostPage extends React.Component {
         this.findCommentsByPostId();
     }
 
-    // updateCommentNum(postId, num) {
-        // axios.patch(`/home/post/${this.postId}`, {commentNum:num})
-        // axios.patch(`/home/post/${postId}`, { commentNum: num })
-        //     .then((response) => {
-        //         console.log(response.res_body);
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     })
-    // }
-
     getCommentNum(postId) {
         let comments;
         let num;
-        // axios.get(`/home/comment/comments/${this.postId}`, )
         axios.get(`/home/comment/comments/${postId}`,)
             .then((response) => {
                 comments = response.data.res_body
                 num = comments.length;
-                // this.updateCommentNum(postId, num);
                 axios.patch(`/home/post/${postId}`, { commentNum: num })
                     .then((response) => {
                         console.log(response.res_body);
@@ -97,7 +82,6 @@ class PostPage extends React.Component {
         }
         axios.post(`/home/comment/comments/${this.postId}`, newComment)
             .then((response) => {
-                // console.log(response.data);
                 this.setState({
                     comments: this.state.comments.concat(response.data.res_body)
                 })

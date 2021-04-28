@@ -24,10 +24,8 @@ function updateCommentByCommentId(commentId, updatedContent) {
     return CommentModel.findOneAndUpdate({commentId:commentId}, updatedContent);
 }
 
-function countCommentByPostID(postId) {
-    const filter = {postId: postId};
-    console.log(postId)
-    return CommentModel.countDocuments(filter);
+function deleteAllCommentsByPostId(postId) {
+    return CommentModel.remove({postId:postId});
 }
 
 exports.findComments = findCommentsByPostId;
@@ -35,4 +33,4 @@ exports.addComment = addComment;
 exports.findCommentByCommentId = findCommentByCommentId;
 exports.deleteCommentByCommentId = deleteCommentByCommentId;
 exports.updateCommentByCommentId = updateCommentByCommentId;
-exports.countCommentByPostID = countCommentByPostID;
+exports.deleteAllCommentsByPostId = deleteAllCommentsByPostId;
