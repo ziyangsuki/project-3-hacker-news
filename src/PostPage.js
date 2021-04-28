@@ -128,7 +128,7 @@ class PostPage extends React.Component {
                     <div><h1>{post.title}</h1></div>
                     {editButton}
                     <div className="info-grid">
-                        <div>Account: {post.account}</div>
+                        <div>Account: <b>{post.account}</b></div>
                         <div>CreateDate: {post.createDate}</div>
                     </div>
                     <div className="post-content-box">
