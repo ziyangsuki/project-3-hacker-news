@@ -15,6 +15,12 @@
     color:red;
 }
 
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 20%;
+}
+
 .button {
     background-color: #FC8E20;
     color: white;
