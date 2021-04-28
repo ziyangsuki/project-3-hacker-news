@@ -74,8 +74,8 @@ class LoginPage extends React.Component {
               <td/>
               <td/>
               <td>
-                <button onClick={()=> this.back()}>Back</button>
-                <button onClick={()=> this.login()}>Login</button>
+                <button className='button' onClick={()=> this.back()}>Back</button>
+                <button className='button' onClick={()=> this.login()}>Login</button>
               </td>
             </tr>
           </tbody>

@@ -76,8 +76,8 @@ class SighUpPage extends React.Component {
               <td/>
               <td/>
               <td>
-                <button onClick={()=> this.back()}>Back</button>
-                <button onClick={()=> this.signUp()}>Sigh Up</button>
+                <button className='button' onClick={()=> this.back()}>Back</button>
+                <button className='button' onClick={()=> this.signUp()}>Sign Up</button>
               </td>
             </tr>
           </tbody>

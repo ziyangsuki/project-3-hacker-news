@@ -8,7 +8,7 @@
 
 .nav-bar {
     width: 60%;
-    background-color: cornsilk;
+    background-color: rgb(243, 111, 10);
     display: flex;
     justify-content: center;
 }
@@ -37,14 +37,14 @@
     min-height: 100vh;
 }
 
-.button {
+.home-button {
     background-color: #FC8E20;
     color: white;
-    height: 10px;
-    width: 50px;
+    height: 35px;
+    width: 75px;
     border-radius: 20px;
     text-align: center;
-    line-height: 45px;
+    line-height: 30px;
     font-weight: bold;
     margin: 20px;
 }
@@ -55,7 +55,7 @@
 }
 
 .small-button {
-    background-color: #FC8E20;
+    background-color: #f09d0d;
     color: white;
     height: 20px;
     width: 50px;

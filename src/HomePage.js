@@ -113,10 +113,10 @@ class HomePage extends React.Component {
     if(this.props.login.webtoken === ""){
       loginButton = (
         <div>
-          <button className="button" onClick={()=> this.login()}>
+          <button className="home-button" onClick={()=> this.login()}>
             Login
           </button>
-          <button className="button" onClick={()=> this.register()}>
+          <button className="home-button" onClick={()=> this.register()}>
             Register
           </button>
         </div>
@@ -139,8 +139,8 @@ class HomePage extends React.Component {
       <div className='body'>
         <div className="center">
           <div className="nav-bar">
-              <div classNamt='topic'>
-                  Amazing Web Development Ideas
+              <div className='topic'>
+                  Amazing  Web  Development  Ideas
               </div>
           </div>
           <div className="tool-bar">
