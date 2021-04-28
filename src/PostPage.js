@@ -95,7 +95,6 @@ class PostPage extends React.Component {
             account: this.props.login.account,
             commentId: uuid()
         }
-        console.log(newComment.postId);
         axios.post(`/home/comment/comments/${this.postId}`, newComment)
             .then((response) => {
                 // console.log(response.data);
@@ -107,7 +106,7 @@ class PostPage extends React.Component {
             .catch((error) => {
                 console.error(error);
             })
-        
+        document.getElementById("comment-textbox").value="";
     }
 
     showOrHideInput(id) {
@@ -141,7 +140,6 @@ class PostPage extends React.Component {
 
             <div className="body">
                 <button className="button" onClick={() => this.back()}>Back</button>
-
                 <div className="post-outline">
                     <div><h1>{post.title}</h1></div>
                     {editButton}
@@ -158,8 +156,8 @@ class PostPage extends React.Component {
 
                 <div id="addComment" style={{ display: 'none' }} >
                     <div className="flex-box">
-                        <textarea type="text"
-                            onChange={(e) => this.setState({ commentToAdd: e.target.value })} />
+                        <textarea id="comment-textbox"
+                            onChange={(e) => this.setState({ commentToAdd: e.target.value })} defaultValue=""/>
                     </div>
                     <div className="action-buttons-grid">
                         <div className="button" onClick={() => this.addComment()}>Submit</div>
@@ -171,11 +169,8 @@ class PostPage extends React.Component {
                         <Comment key={comment.commentId} postId={this.postId} commentId={comment.commentId} func={this.getCommentNum}></Comment>
                     ))}
                 </div>
-                
             </div>
-
         )
-
     }
 }
 
