@@ -4,9 +4,10 @@
 }
 
 .body {
+    display:flex;
+    justify-content: center;
     background-color: #FFE7D0;
-    display: flex;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     align-items: center;
     flex-direction: column;
     min-width: 100vw;
@@ -40,6 +41,11 @@
     cursor: pointer;
 }
 
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 20%;
+}
 
 @media screen and (max-width: 850px) {
 
