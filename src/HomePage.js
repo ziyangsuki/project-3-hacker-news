@@ -123,7 +123,7 @@ class HomePage extends React.Component {
     let loginButton;
     if (this.props.login.webtoken === "") {
       loginButton = (
-        <div>
+        <div className="home-buttons-box">
           <button className="home-button" onClick={() => this.login()}>
             Login
           </button>
@@ -135,7 +135,7 @@ class HomePage extends React.Component {
     } else {
       console.log(this.props.login)
       loginButton = (
-        <div>
+        <div className="home-buttons-box">
           <button className="button" onClick={() => this.logout()}>
             Logout
           </button>
@@ -155,15 +155,15 @@ class HomePage extends React.Component {
               </div>
           </div>
           <div className="tool-bar">
-            <div></div>
+            <div className="left-space"></div>
             <div className="account">
-              <span className='accountName'>
-                {this.props.login.account}
-              </span>
-                {/* &nbsp;&nbsp;&nbsp; */}
+              <div className='accountName'>
+                <b>{this.props.login.account}</b>
+              </div>
                 {loginButton}
             </div>
           </div>
+          
           <div className="content">
             <table className="post-content">
               <tbody>

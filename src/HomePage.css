@@ -15,12 +15,17 @@
 
 .tool-bar {
     width: 60%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
 }
 
 .accountName {
-    border: 1pt solid green
+    background-color: rgb(255, 255, 255, 0.5);
+    color:#953920;
+    text-align: center;
+    border-radius: 20px;
+    line-height: 30px;
+    margin-top: 5px;
 }
 
 .content{
@@ -37,8 +42,13 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    /* width: 100vw; */
+    min-width: 100vw; 
     min-height: 100vh;
+}
+
+.home-buttons-box {
+    display: flex;
+    justify-content: center;
 }
 
 .home-button {
@@ -50,7 +60,7 @@
     text-align: center;
     line-height: 30px;
     font-weight: bold;
-    margin: 20px;
+    margin: 10px;
 }
 
 .home-button:hover {
@@ -78,10 +88,6 @@
 .small-button:hover {
     color: #323232;
     cursor: pointer;
-}
-
-.accountName {
-    text-align: right;
 }
 
 .topic {

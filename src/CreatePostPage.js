@@ -6,7 +6,7 @@ import './CreatePostPage.css';
 
 
 class CreatePostPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.postId = this.props.match.params.postId;
     this.state = {
@@ -18,35 +18,35 @@ class CreatePostPage extends React.Component {
 
   componentDidMount() {
     // Check if cookies has webtoken
-    if(Cookies.get('webtoken')){
-      this.props.setToken({type: "SETTOKEN", val: {webtoken:Cookies.get('webtoken'), account:Cookies.get('account')}});
+    if (Cookies.get('webtoken')) {
+      this.props.setToken({ type: "SETTOKEN", val: { webtoken: Cookies.get('webtoken'), account: Cookies.get('account') } });
     }
     if (this.postId) {
       axios.get(`/home/post/${this.postId}`, {})
-          .then((response) => {
-              // console.log(response);
-              const res_body = response.data.res_body;
-              this.setState({
-                  title: res_body.title,
-                  content: res_body.content,
-                  account: res_body.account
-              });
-          })
-          .catch((error) => {
-              console.error(error);
-          })
+        .then((response) => {
+          // console.log(response);
+          const res_body = response.data.res_body;
+          this.setState({
+            title: res_body.title,
+            content: res_body.content,
+            account: res_body.account
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        })
     }
   }
 
-  createPost(){
-    if(!this.state.title || !this.state.content){
+  createPost() {
+    if (!this.state.title || !this.state.content) {
       this.setState({
-          error: "Please fill the Title and Content."
+        error: "Please fill the Title and Content."
       })
       return;
     }
     let post = {
-      title:this.state.title,
+      title: this.state.title,
       account: this.props.login.account,
       content: this.state.content,
     };
@@ -54,29 +54,29 @@ class CreatePostPage extends React.Component {
     if (this.postId) {
       // postId exists, which means we'd like to edit instead of creating the post
       axios.put(`/home/post/${this.postId}`, post)
-      .then((response) => {
-        this.props.history.push('/');
-      })
-      .catch((error) => {
-        this.setState({
-            error: error.response.data.res_body
+        .then((response) => {
+          this.props.history.push('/');
         })
-      })
+        .catch((error) => {
+          this.setState({
+            error: error.response.data.res_body
+          })
+        })
     } else {
       axios.post('/home/post', post)
-      .then((response) => {
-        this.props.history.push('/');
-      })
-      .catch((error) => {
-        this.setState({
-            error: error.response.data.res_body
+        .then((response) => {
+          this.props.history.push('/');
         })
-      })
+        .catch((error) => {
+          this.setState({
+            error: error.response.data.res_body
+          })
+        })
     }
   }
 
 
-  back(){
+  back() {
     this.props.history.push('/');
   }
 
@@ -84,54 +84,48 @@ class CreatePostPage extends React.Component {
     return (
       <div className="body">
         <div className="warning">
-            {this.state.error}
+          {this.state.error}
         </div>
         <table>
           <tbody>
             <tr>
               <td><label><h3>Title</h3></label></td>
               <td>:</td>
-              <td> 
-                <input type="text" value={this.state.title} 
-                  onChange={e => this.setState({title:e.target.value})}>
+              <td>
+                <input type="text" value={this.state.title} id="title-input"
+                  onChange={e => this.setState({ title: e.target.value })}>
                 </input>
               </td>
             </tr>
             <tr>
               <td><label><h3>Content</h3></label></td>
               <td>:</td>
-              <td> 
-                <input type="text" value={this.state.content} 
-                  onChange={e => this.setState({content:e.target.value})}>
-                </input>
-              </td>
-            </tr>
-            <tr>
-              <td/>
-              <td/>
               <td>
-                <button className="button" onClick={()=> this.back()}>Back</button>
-                <button className="button" onClick={()=> this.createPost()}>Submit</button>
+                <input type="text" value={this.state.content} id="content-input"
+                  onChange={e => this.setState({ content: e.target.value })}>
+                </input>
               </td>
             </tr>
           </tbody>
         </table>
+        <button className="button" onClick={() => this.createPost()}>Submit</button>
+        <button className="button" onClick={() => this.back()}>Back</button>
       </div>
     )
   }
 }
 
-let mapDispatchToProps = function(dispatch, props) {
+let mapDispatchToProps = function (dispatch, props) {
   return {
-      setToken: (val) => {
-        dispatch(val);
-      }
+    setToken: (val) => {
+      dispatch(val);
+    }
   }
 }
 
-let mapStateToProps = function(state, props) {
+let mapStateToProps = function (state, props) {
   return {
-      login: state.login
+    login: state.login
   }
 }
 
